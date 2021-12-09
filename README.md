@@ -1,2 +1,3 @@
 # react-tree-checkbox
- Full generic and elegant checkbox tree for React.
+
+Full generic and elegant checkbox tree for React and responsive.

@@ -100,9 +100,24 @@ export default function App() {
 
 ## Properties
 
-| Property   | type   | Default | options  | Description         |
-| ---------- | ------ | ------- | -------- | ------------------- |
-| timeFormat | number | 12      | 12 or 24 | 12 hours or 24hours |
+| Property          | type     | Default                                      | options                             | Description                                                                                                                        |
+| ----------------- | -------- | -------------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| filternodes       | array    | []                                           |                                     | in this prop you will pass array of object                                                                                         |
+| expanded          | array    | []                                           |                                     | in this prop you will pass array of strings which you want to expand initialiy eg :["animals","cat"]                               |
+| handleExpand      | function |                                              |                                     | in this prop you will pass a call back function which return the array of string which are expanded                                |
+| column            | number   | 6                                            | 1 to 12                             | how many columns you want ro divide your tree. this is based on bootstrap grid                                                     |
+| expandIcon        | element  | <img src={folderOpen} alt="expandicon" />    | element or tag                      | change the expand icon.you can use react-icons and also html tags                                                                  |
+| compressIcon      | element  | <img src={folderClose} alt="compressicon" /> |                                     | change the compress icon.you can use react-icons and also html tags                                                                |
+| fontSize          | string   | '18px'                                       | any value in px                     | to increase the size of your tree. this will also increase icon,checkbox and the string                                            |
+| backgroundColor   | string   | 'white'                                      | #e6c300,red,yellow                  | change the backgroundcolor of tree                                                                                                 |
+| color             | string   | 'black'                                      | #e6c300,red,yellow                  | in this prop you will pass array of object                                                                                         |
+| horizontalSpacing | string   | "14px"                                       | any value in px                     | add margin-left to the each column of tree                                                                                         |
+| verticalSpacing   | string   | "5px"                                        | any value in px                     | add margin-bottom to the each column of tree                                                                                       |
+| borderLeft        | string   | "none"                                       | "1px solid red"                     | add border-left(just for styling)                                                                                                  |
+| saveTree          | function |                                              |                                     | if you want to save changes pass callback function                                                                                 |
+| savebtnClass      | string   | "rtc-save-button"                            | "btn btn-success" or any othe class | you can style the save btn by adding your own custom class                                                                         |
+| allowCheck        | boolean  | true                                         | true or false                       | if you dont want the checkbox functionality then pass false                                                                        |
+| changeState       | function |                                              |                                     | when the checkbox is checked or unchecked this props should be passed so pass a callback function and it wil give you latest nodes |
 
 # Hi, I'm Arslan Ahmed Shaad! 👋
 

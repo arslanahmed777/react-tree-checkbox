@@ -1,2 +1,2 @@
-import Tree from "./components/Tree.js"
-export default Tree
+import TreeView from "./components/TreeView.js"
+export default TreeView

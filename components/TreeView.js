@@ -130,7 +130,7 @@ let findNode = (nodes, value, status) => {
 
 
 
-const Tree = ({ filternodes = [], column, expandIcon, compressIcon, expanded, handleExpand, changeState, fontSize, backgroundColor, color, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, saveTree, savebtnClass }) => {
+const TreeView = ({ filternodes = [], column, expandIcon, compressIcon, expanded, handleExpand, changeState, fontSize, backgroundColor, color, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, saveTree, savebtnClass }) => {
     //column = 12 / column
     return (
         <div className="rtc-row" style={{ fontSize: fontSize, backgroundColor: backgroundColor, color: color }}>
@@ -151,7 +151,7 @@ const Tree = ({ filternodes = [], column, expandIcon, compressIcon, expanded, ha
     );
 };
 
-const Tree1 = (props) => {
+const Tree = (props) => {
     return (
         <>
             {props.data.map((items, i) => (
@@ -196,7 +196,7 @@ const TreeNode = ({ filternodes, nodes, expandIcon, compressIcon, expanded, hand
             </div>
             {expanded.includes(nodes.value) && (
                 <div style={{ marginLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 12px )`, borderLeft: borderLeft, paddingLeft: borderLeft === "none" ? "0px" : "12px" }}>
-                    <Tree1 filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} fontSize={fontSize} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} />
+                    <Tree filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} fontSize={fontSize} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} />
                 </div>
             )}
         </>
@@ -204,7 +204,7 @@ const TreeNode = ({ filternodes, nodes, expandIcon, compressIcon, expanded, hand
 };
 
 // Specifies the default values for props:
-Tree.defaultProps = {
+TreeView.defaultProps = {
     borderLeft: 'none',
     color: 'black',
     backgroundColor: 'white',
@@ -219,7 +219,7 @@ Tree.defaultProps = {
     savebtnClass: "rtc-save-button"
 };
 
-Tree.propTypes = {
+TreeView.propTypes = {
     borderLeft: PropTypes.string,
     allowCheck: PropTypes.bool,
     verticalSpacing: PropTypes.string,
@@ -242,4 +242,4 @@ Tree.propTypes = {
 };
 
 
-export default Tree;
+export default TreeView;

@@ -1,7 +1,7 @@
 {
   "name": "react-tree-checkbox",
-  "version": "1.0.9",
-  "description": "A lightweight but complete  react tree",
+  "version": "1.0.11",
+  "description": "A lightweight but complete react tree with checkbox functionality",
   "main": "./build/index.js",
   "scripts": {
     "build": "webpack"
@@ -22,7 +22,13 @@
   },
   "keywords": [
     "react-tree-checkbox",
-    "checkboxtree"
+    "react-checkbox-tree",
+    "tree-nav",
+    "tree",
+    "react",
+    "tree-navigation",
+    "treeview",
+    "treeNav"
   ],
   "author": "Arslan Ahmed Shaad",
   "license": "ISC"

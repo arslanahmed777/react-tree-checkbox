@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import folderClose from "./folderClose.svg"
 import folderOpen from "./folderOpen.svg"
+import deleteicon from "./deleteIcon.svg"
 import "./Tree.css";
 
 // ******************************** CUSTOM HELPER FUNCTIONS *********************
@@ -128,16 +129,31 @@ let findNode = (nodes, value, status) => {
     }
 };
 
+const getupdatednodes = (nodeid, allnodes) => {
+    allnodes.forEach((node, index) =>
+        node.id === nodeid
+            ? allnodes.splice(index, 1)
+            : node.nodes
+                ? getupdatednodes(nodeid, node.nodes)
+                : ''
+    );
+    return allnodes
+}
 
 
-const TreeView = ({ filternodes = [], column, expandIcon, compressIcon, expanded, handleExpand, changeState, fontSize, backgroundColor, color, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, saveTree, savebtnClass }) => {
+
+
+
+
+
+const TreeView = ({ filternodes = [], column, expandIcon, deleteIcon, compressIcon, expanded, handleExpand, changeState, fontSize, backgroundColor, color, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, saveTree, savebtnClass }) => {
     //column = 12 / column
     return (
         <div className="rtc-row" style={{ fontSize: fontSize, backgroundColor: backgroundColor, color: color }}>
             {filternodes.map((items, i) => {
                 return (
                     <div key={i} className={`rtc-scroll rtc-col-${column}`} style={{ overflowX: "auto" }}>
-                        <TreeNode filternodes={filternodes} nodes={items} expandIcon={expandIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} fontSize={fontSize} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} />
+                        <TreeNode filternodes={filternodes} nodes={items} expandIcon={expandIcon} deleteIcon={deleteIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} fontSize={fontSize} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} />
                     </div>
                 )
             })}
@@ -155,14 +171,14 @@ const Tree = (props) => {
     return (
         <>
             {props.data.map((items, i) => (
-                <TreeNode filternodes={props.filternodes} key={i} nodes={items} expandIcon={props.expandIcon} compressIcon={props.compressIcon} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} fontSize={props.fontSize} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} />
+                <TreeNode filternodes={props.filternodes} key={i} nodes={items} expandIcon={props.expandIcon} deleteIcon={props.deleteIcon} compressIcon={props.compressIcon} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} fontSize={props.fontSize} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} />
             ))}
 
         </>
     );
 };
 
-const TreeNode = ({ filternodes, nodes, expandIcon, compressIcon, expanded, handleExpand, changeState, fontSize, horizontalSpacing, verticalSpacing, borderLeft, allowCheck }) => {
+const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, compressIcon, expanded, handleExpand, changeState, fontSize, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete }) => {
     const hasChild = nodes.nodes ? true : false;
     const handleVisibility = (e) => {
         let newArray = expanded
@@ -177,6 +193,14 @@ const TreeNode = ({ filternodes, nodes, expandIcon, compressIcon, expanded, hand
     const handleCheck = (e) => {
         changeState(findNode(filternodes, e.target.value, e.target.checked))
     }
+    const handleDeleteNode = (nodeid, allnodes) => {
+        const fff = getupdatednodes(nodeid, allnodes)
+
+        console.log(fff);
+        changeState(fff)
+
+
+    }
     return (
         <>
             <div className="rtc-d-flex" style={{ alignItems: "center", marginBottom: verticalSpacing }} >
@@ -190,13 +214,15 @@ const TreeNode = ({ filternodes, nodes, expandIcon, compressIcon, expanded, hand
                         <span className="rtc-mx-1">
                             {allowCheck && <input value={nodes.value} name={nodes.value} onChange={(e) => handleCheck(e)} type="checkbox" checked={nodes.status} className="rtc-mx-1" style={{ width: `calc(${fontSize} - 8px)`, height: `calc(${fontSize} - 8px)` }} />}
                         </span>
-                        <span>{nodes.text}</span>
+                        <span className="rtc-text-wrapper">{nodes.text}
+                            {allowDelete ? <span onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{deleteIcon}</span> : null}
+                        </span>
                     </span>
                 </div>
             </div>
             {expanded.includes(nodes.value) && (
                 <div style={{ marginLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 12px )`, borderLeft: borderLeft, paddingLeft: borderLeft === "none" ? "0px" : "12px" }}>
-                    <Tree filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} fontSize={fontSize} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} />
+                    <Tree filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} deleteIcon={deleteIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} fontSize={fontSize} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} />
                 </div>
             )}
         </>
@@ -211,8 +237,10 @@ TreeView.defaultProps = {
     fontSize: '18px',
     compressIcon: <img src={folderClose} alt="compressicon" />,
     expandIcon: <img src={folderOpen} alt="expandicon" />,
+    deleteIcon: <img src={deleteicon} alt="deleteicon" />,
     column: 6,
     allowCheck: true,
+    allowDelete: false,
     horizontalSpacing: "14px",
     verticalSpacing: "5px",
     saveTree: false,
@@ -222,6 +250,7 @@ TreeView.defaultProps = {
 TreeView.propTypes = {
     borderLeft: PropTypes.string,
     allowCheck: PropTypes.bool,
+    allowDelete: PropTypes.bool,
     verticalSpacing: PropTypes.string,
     horizontalSpacing: PropTypes.string,
     color: PropTypes.string,
@@ -229,6 +258,7 @@ TreeView.propTypes = {
     fontSize: PropTypes.string,
     compressIcon: PropTypes.element,
     expandIcon: PropTypes.element,
+    deleteIcon: PropTypes.element,
     column: PropTypes.number,
     filternodes: PropTypes.array.isRequired,
     expanded: PropTypes.array.isRequired,

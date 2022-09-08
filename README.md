@@ -21,6 +21,7 @@ This project have following features :
 - You can save the nodes by applying function
 - you can add spacing both horizontal and vertical
 - you can increase the size of your whole tree with only one prop (fontSize)
+- you can delete the node by passing allowDelete to true
 
 ## Demo
 
@@ -38,56 +39,61 @@ you can test my package from this link
 ## Usage/Examples
 
 ```javascript
-import React, { useState } from 'react'
-import TreeView from 'react-tree-checkbox'
+import React, { useState } from "react";
+import TreeView from "react-tree-checkbox";
 const nodes = [
   {
-    value: 'animals',
-    text: 'Animals',
+    value: "animals",
+    text: "Animals",
+    id: 1,
     status: false,
     nodes: [
       {
-        value: 'mammals',
-        text: 'Mammals',
+        value: "mammals",
+        text: "Mammals",
         status: false,
+        id: 2,
         nodes: [
           {
-            value: 'cat',
-            text: 'Cat',
+            value: "cat",
+            text: "Cat",
             status: false,
             nodes: null,
+            id: 3,
           },
           {
-            value: 'dog',
-            text: 'Dog',
+            value: "dog",
+            text: "Dog",
             status: false,
             nodes: null,
+            id: 4,
           },
         ],
       },
     ],
   },
   {
-    value: 'plants',
+    value: "plants",
     text: <h1>Plants</h1>,
     status: true,
     nodes: null,
+    id: 5,
   },
-]
+];
 export default function App() {
-  const [Nodes, setNodes] = useState(nodes)
-  const [expanded, setExpanded] = useState([])
+  const [Nodes, setNodes] = useState(nodes);
+  const [expanded, setExpanded] = useState([]);
   const handleExpand = (newArray) => {
-    console.log('handleExpand', newArray)
-    setExpanded([...newArray])
-  }
+    console.log("handleExpand", newArray);
+    setExpanded([...newArray]);
+  };
   const handleCheck = (treeNodes) => {
-    console.log('handleCheck', treeNodes)
-    setNodes([...treeNodes])
-  }
+    console.log("handleCheck", treeNodes);
+    setNodes([...treeNodes]);
+  };
   const handeleSave = (chklist) => {
-    console.log('handeleSave', chklist)
-  }
+    console.log("handeleSave", chklist);
+  };
   return (
     <TreeView
       filternodes={Nodes}
@@ -95,30 +101,32 @@ export default function App() {
       handleExpand={handleExpand}
       changeState={handleCheck}
     />
-  )
+  );
 }
 ```
 
 ## Properties
 
-| Property          | type     | Default                                        | options                             | Description                                                                                                                        |
-| ----------------- | -------- | ---------------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| filternodes       | array    | []                                             |                                     | in this prop you will pass array of object                                                                                         |
-| expanded          | array    | []                                             |                                     | in this prop you will pass array of strings which you want to expand initialiy eg :["animals","cat"]                               |
-| handleExpand      | function |                                                |                                     | in this prop you will pass a call back function which return the array of string which are expanded                                |
-| column            | number   | 6                                              | 1 to 12                             | how many columns you want ro divide your tree. this is based on bootstrap grid                                                     |
-| expandIcon        | element  | "<img src={folderOpen} alt="expandicon" />"    | element or tag                      | change the expand icon.you can use react-icons and also html tags                                                                  |
-| compressIcon      | element  | "<img src={folderClose} alt="compressicon" />" | element or tag                      | change the compress icon.you can use react-icons and also html tags                                                                |
-| fontSize          | string   | '18px'                                         | any value in px                     | to increase the size of your tree. this will also increase icon,checkbox and the string                                            |
-| backgroundColor   | string   | 'white'                                        | #e6c300,red,yellow                  | change the backgroundcolor of tree                                                                                                 |
-| color             | string   | 'black'                                        | #e6c300,red,yellow                  | in this prop you will pass array of object                                                                                         |
-| horizontalSpacing | string   | "14px"                                         | any value in px                     | add margin-left to the each column of tree                                                                                         |
-| verticalSpacing   | string   | "5px"                                          | any value in px                     | add margin-bottom to the each column of tree                                                                                       |
-| borderLeft        | string   | "none"                                         | "1px solid red"                     | add border-left(just for styling)                                                                                                  |
-| saveTree          | function |                                                |                                     | if you want to save changes pass callback function                                                                                 |
-| savebtnClass      | string   | "rtc-save-button"                              | "btn btn-success" or any othe class | you can style the save btn by adding your own custom class                                                                         |
-| allowCheck        | boolean  | true                                           | true or false                       | if you dont want the checkbox functionality then pass false                                                                        |
-| changeState       | function |                                                |                                     | when the checkbox is checked or unchecked this props should be passed so pass a callback function and it wil give you latest nodes |
+| Property          | type     | Default                                        | options                             | Description                                                                                                                                           |
+| ----------------- | -------- | ---------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| filternodes       | array    | []                                             |                                     | in this prop you will pass array of object                                                                                                            |
+| expanded          | array    | []                                             |                                     | in this prop you will pass array of strings which you want to expand initialiy eg :["animals","cat"]                                                  |
+| handleExpand      | function |                                                |                                     | in this prop you will pass a call back function which return the array of string which are expanded                                                   |
+| column            | number   | 6                                              | 1 to 12                             | how many columns you want ro divide your tree. this is based on bootstrap grid                                                                        |
+| expandIcon        | element  | "<img src={folderOpen} alt="expandicon" />"    | element or tag                      | change the expand icon.you can use react-icons and also html tags                                                                                     |
+| compressIcon      | element  | "<img src={folderClose} alt="compressicon" />" | element or tag                      | change the compress icon.you can use react-icons and also html tags                                                                                   |
+| deleteIcon        | element  | "<img src={deleteicon} alt="deleteicon" />"    | element or tag                      | change the delete icon.you can use react-icons and also html tags                                                                                     |
+| fontSize          | string   | '18px'                                         | any value in px                     | to increase the size of your tree. this will also increase icon,checkbox and the string                                                               |
+| backgroundColor   | string   | 'white'                                        | #e6c300,red,yellow                  | change the backgroundcolor of tree                                                                                                                    |
+| color             | string   | 'black'                                        | #e6c300,red,yellow                  | in this prop you will pass array of object                                                                                                            |
+| horizontalSpacing | string   | "14px"                                         | any value in px                     | add margin-left to the each column of tree                                                                                                            |
+| verticalSpacing   | string   | "5px"                                          | any value in px                     | add margin-bottom to the each column of tree                                                                                                          |
+| borderLeft        | string   | "none"                                         | "1px solid red"                     | add border-left(just for styling)                                                                                                                     |
+| saveTree          | function |                                                |                                     | if you want to save changes pass callback function                                                                                                    |
+| savebtnClass      | string   | "rtc-save-button"                              | "btn btn-success" or any othe class | you can style the save btn by adding your own custom class                                                                                            |
+| allowCheck        | boolean  | true                                           | true or false                       | if you dont want the checkbox functionality then pass false                                                                                           |
+| allowDelete       | boolean  | false                                          | true or false                       | if you want to delete the node then pass true                                                                                                         |
+| changeState       | function |                                                |                                     | when the checkbox is checked or unchecked or node is deleted this props should be passed so pass a callback function and it wil give you latest nodes |
 
 # Hi, I'm Arslan Ahmed Shaad! 👋
 

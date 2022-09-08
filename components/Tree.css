@@ -2,57 +2,71 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .rtc-col-1 {
   flex: 0 0 auto;
   width: 8.33333333%;
 }
+
 .rtc-col-2 {
   flex: 0 0 auto;
   width: 16.66666667%;
 }
+
 .rtc-col-3 {
   flex: 0 0 auto;
   width: 25%;
 }
+
 .rtc-col-4 {
   flex: 0 0 auto;
   width: 33.33333333%;
 }
+
 .rtc-col-5 {
   flex: 0 0 auto;
   width: 41.66666667%;
 }
+
 .rtc-col-6 {
   flex: 0 0 auto;
   width: 50%;
 }
+
 .rtc-col-7 {
   flex: 0 0 auto;
   width: 58.33333333%;
 }
+
 .rtc-col-8 {
   flex: 0 0 auto;
   width: 66.66666667%;
 }
+
 .rtc-col-9 {
   flex: 0 0 auto;
   width: 75%;
 }
+
 .rtc-col-10 {
   flex: 0 0 auto;
   width: 83.33333333%;
 }
+
 .rtc-col-11 {
   flex: 0 0 auto;
   width: 91.66666667%;
 }
+
 .rtc-col-12 {
   flex: 0 0 auto;
   width: 100%;
 }
+
 .rtc-d-flex {
   display: flex !important;
 }
+
 .rtc-mx-1 {
   margin-right: 0.25rem !important;
   margin-left: 0.25rem !important;
@@ -78,6 +92,7 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 .rtc-save-button {
   align-items: center;
   background-color: #fff;
@@ -105,10 +120,27 @@
   touch-action: manipulation;
   margin: 10px 10px;
 }
+
 .rtc-save-button:hover {
   background-color: #000;
   border: 2px solid #000;
   color: #fff;
+}
+
+.rtc-text-wrapper {
+  position: relative
+}
+
+.rtc-deleteicon {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: -11px;
+}
+
+.rtc-text-wrapper:hover .rtc-deleteicon {
+  display: flex
 }
 
 .rtc-scroll::-webkit-scrollbar {

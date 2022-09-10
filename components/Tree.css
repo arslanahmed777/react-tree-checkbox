@@ -139,7 +139,16 @@
   right: -11px;
 }
 
-.rtc-text-wrapper:hover .rtc-deleteicon {
+.rtc-addicon {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 1px;
+}
+
+.rtc-text-wrapper:hover .rtc-deleteicon,
+.rtc-text-wrapper:hover .rtc-addicon {
   display: flex
 }
 

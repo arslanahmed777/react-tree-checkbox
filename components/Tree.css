@@ -131,25 +131,19 @@
   position: relative
 }
 
-.rtc-deleteicon {
-  display: none;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: -11px;
-}
-
+.rtc-deleteicon,
 .rtc-addicon {
   display: none;
+  margin: 0 3px;
   cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 1px;
+
 }
+
+
 
 .rtc-text-wrapper:hover .rtc-deleteicon,
 .rtc-text-wrapper:hover .rtc-addicon {
-  display: flex
+  display: inline
 }
 
 .rtc-scroll::-webkit-scrollbar {

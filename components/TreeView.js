@@ -169,7 +169,7 @@ const TreeView = ({ filternodes = [], column, expandIcon, deleteIcon, compressIc
         if (nodeValue === null) return
         let newobj = {
             text: nodeValue,
-            value: nodeValue.toLowerCase(),
+            value: nodeValue.replace(/\s/g, '').toLowerCase(),
             status: false,
             nodes: [],
             id: uniqueId(),
@@ -245,7 +245,7 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
         if (nodeValue === null) return
         let newobj = {
             text: nodeValue,
-            value: nodeValue.toLowerCase(),
+            value: nodeValue.replace(/\s/g, '').toLowerCase(),
             status: false,
             nodes: [],
             id: uniqueId(),

@@ -11,13 +11,13 @@ import "./Tree.css";
 let findNode = (nodes, value, status) => {
     let foundObj = null;
     nodes.forEach((__) => {
-        if (__.value === value) {
+        if (__.id === value) {
             foundObj = __;
         } else {
             let searchRecursive = (node) => {
                 if (node.nodes) {
                     node.nodes.forEach((_) => {
-                        if (_.value === value) {
+                        if (_.id === value) {
                             foundObj = __;
                         } else {
                             searchRecursive(_);
@@ -32,12 +32,12 @@ let findNode = (nodes, value, status) => {
         let foundNodes = [];
 
         let recursiveFind = (nextNodes, value) => {
-            if (nextNodes.value === value) {
+            if (nextNodes.id === value) {
                 foundNodes.push(nextNodes);
             } else {
                 if (nextNodes.nodes) {
                     nextNodes.nodes.forEach((_) => {
-                        if (_.value === value) {
+                        if (_.id === value) {
                             foundNodes.push(_);
                         } else {
                             if (_.nodes) {
@@ -48,8 +48,8 @@ let findNode = (nodes, value, status) => {
                 }
             }
         };
-        let setStatus = (nextNodes, { value }, status) => {
-            let recursiveTrue = (nextNodes, value) => {
+        let setStatus = (nextNodes, { id }, status) => {
+            let recursiveTrue = (nextNodes, id) => {
                 let parentNode = nextNodes;
                 let setRecursiveChild = (node, b) => {
                     node.status = b;
@@ -60,23 +60,23 @@ let findNode = (nodes, value, status) => {
                     }
                 };
                 let setRecursiveTrue = (node) => {
-                    if (node.value === value) {
-                        let setRecursiveParent = (node, value) => {
+                    if (node.id === id) {
+                        let setRecursiveParent = (node, id) => {
                             if (node.nodes) {
-                                if (node.nodes.some((v) => v.value === value)) {
+                                if (node.nodes.some((v) => v.id === id)) {
                                     node.status = true;
-                                    setRecursiveParent(parentNode, node.value);
+                                    setRecursiveParent(parentNode, node.id);
                                 } else {
                                     if (node.nodes) {
                                         node.nodes.forEach((_) => {
-                                            setRecursiveParent(_, value);
+                                            setRecursiveParent(_, id);
                                         });
                                     }
                                 }
                             }
                         };
                         setRecursiveChild(node, true);
-                        setRecursiveParent(parentNode, value);
+                        setRecursiveParent(parentNode, id);
                     } else {
                         if (node.nodes) {
                             node.nodes.forEach((_) => {
@@ -86,7 +86,7 @@ let findNode = (nodes, value, status) => {
                     }
                 };
                 let setRecursiveFalse = (node) => {
-                    if (node.value === value) {
+                    if (node.id === id) {
                         node.status = false;
                         setRecursiveChild(node, false);
                     } else {
@@ -98,7 +98,7 @@ let findNode = (nodes, value, status) => {
                     }
                 };
 
-                if (parentNode.value === value) {
+                if (parentNode.id === id) {
                     parentNode.status = status;
                     setRecursiveTrue(parentNode);
                 }
@@ -110,14 +110,14 @@ let findNode = (nodes, value, status) => {
                 return parentNode;
             };
 
-            recursiveTrue(nextNodes, value, status);
+            recursiveTrue(nextNodes, id, status);
         };
 
         recursiveFind(nextNodes, value);
         setStatus(nextNodes, foundNodes[0], status);
-        if (status && nextNodes.value === value) {
+        if (status && nextNodes.id === value) {
             nextNodes.status = status;
-        } else if (nextNodes.value === value && !status) {
+        } else if (nextNodes.id === value && !status) {
             nextNodes.status = status;
         } else {
             nextNodes.status = true;
@@ -231,7 +231,7 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
     }
 
     const handleCheck = (e) => {
-        changeState(findNode(filternodes, e.target.value, e.target.checked))
+        changeState(findNode(filternodes, parseInt(e.target.value), e.target.checked))
     }
     const handleDeleteNode = (nodeid, allnodes) => {
         if (window.confirm("Are you sure you want to delete")) {
@@ -257,14 +257,14 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
         <>
             <div className="rtc-d-flex" style={{ alignItems: "center", marginBottom: verticalSpacing }} >
                 {hasChild && (
-                    <button name={nodes.value} onClick={(e) => handleVisibility(nodes.value)} style={{ height: "fit-content" }} className="rtc-btn">
-                        {expanded.includes(nodes.value) ? expandIcon : compressIcon}
+                    <button name={nodes.id} onClick={(e) => handleVisibility(nodes.id)} style={{ height: "fit-content" }} className="rtc-btn">
+                        {expanded.includes(nodes.id) ? expandIcon : compressIcon}
                     </button>
                 )}
                 <div>
                     <span style={{ display: "flex", alignItems: "end" }}>
                         <span className="rtc-mx-1">
-                            {allowCheck && <input value={nodes.value} name={nodes.value} onChange={(e) => handleCheck(e)} type="checkbox" checked={nodes.status} className="rtc-mx-1" style={{ width: `16px`, height: `16px`, verticalAlign: "middle" }} />}
+                            {allowCheck && <input value={nodes.id} name={nodes.id} onChange={(e) => handleCheck(e)} type="checkbox" checked={nodes.status} className="rtc-mx-1" style={{ width: `16px`, height: `16px`, verticalAlign: "middle" }} />}
                         </span>
                         <span className="rtc-text-wrapper">{nodes.text}
                             {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{deleteIcon}</span> : null}
@@ -273,7 +273,7 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
                     </span>
                 </div>
             </div>
-            {expanded.includes(nodes.value) && (
+            {expanded.includes(nodes.id) && (
                 <div style={{ marginLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 12px )`, borderLeft: borderLeft, paddingLeft: borderLeft === "none" ? "0px" : "12px" }}>
                     <Tree filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
                 </div>

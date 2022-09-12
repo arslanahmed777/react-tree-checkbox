@@ -1,6 +1,6 @@
 {
   "name": "react-tree-checkbox",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "A lightweight but complete react tree with checkbox functionality",
   "main": "./build/index.js",
   "scripts": {

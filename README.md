@@ -20,8 +20,9 @@ This project have following features :
 - In tree you can also link (you can pass any html tag in nodes)
 - You can save the nodes by applying function
 - you can add spacing both horizontal and vertical
-- you can increase the size of your whole tree with only one prop (fontSize)
+- you can do custom styling the size of your whole tree with only one prop (customStyling)
 - you can delete the node by passing allowDelete to true
+- you can add the new node by passing allowAdd to true
 
 ## Demo
 
@@ -58,14 +59,14 @@ const nodes = [
             value: "cat",
             text: "Cat",
             status: false,
-            nodes: null,
+            nodes: [],
             id: 3,
           },
           {
             value: "dog",
             text: "Dog",
             status: false,
-            nodes: null,
+            nodes: [],
             id: 4,
           },
         ],
@@ -76,7 +77,7 @@ const nodes = [
     value: "plants",
     text: <h1>Plants</h1>,
     status: true,
-    nodes: null,
+    nodes: [],
     id: 5,
   },
 ];
@@ -116,9 +117,7 @@ export default function App() {
 | expandIcon        | element  | "<img src={folderOpen} alt="expandicon" />"    | element or tag                      | change the expand icon.you can use react-icons and also html tags                                                                                     |
 | compressIcon      | element  | "<img src={folderClose} alt="compressicon" />" | element or tag                      | change the compress icon.you can use react-icons and also html tags                                                                                   |
 | deleteIcon        | element  | "<img src={deleteicon} alt="deleteicon" />"    | element or tag                      | change the delete icon.you can use react-icons and also html tags                                                                                     |
-| fontSize          | string   | '18px'                                         | any value in px                     | to increase the size of your tree. this will also increase icon,checkbox and the string                                                               |
-| backgroundColor   | string   | 'white'                                        | #e6c300,red,yellow                  | change the backgroundcolor of tree                                                                                                                    |
-| color             | string   | 'black'                                        | #e6c300,red,yellow                  | in this prop you will pass array of object                                                                                                            |
+| addIcon           | element  | "<img src={addicon} alt="addicon" />"          | element or tag                      | change the add icon.you can use react-icons and also html tags                                                                                        |
 | horizontalSpacing | string   | "14px"                                         | any value in px                     | add margin-left to the each column of tree                                                                                                            |
 | verticalSpacing   | string   | "5px"                                          | any value in px                     | add margin-bottom to the each column of tree                                                                                                          |
 | borderLeft        | string   | "none"                                         | "1px solid red"                     | add border-left(just for styling)                                                                                                                     |
@@ -126,7 +125,9 @@ export default function App() {
 | savebtnClass      | string   | "rtc-save-button"                              | "btn btn-success" or any othe class | you can style the save btn by adding your own custom class                                                                                            |
 | allowCheck        | boolean  | true                                           | true or false                       | if you dont want the checkbox functionality then pass false                                                                                           |
 | allowDelete       | boolean  | false                                          | true or false                       | if you want to delete the node then pass true                                                                                                         |
+| allowAdd          | boolean  | false                                          | true or false                       | if you want to add the new node then pass true                                                                                                        |
 | changeState       | function |                                                |                                     | when the checkbox is checked or unchecked or node is deleted this props should be passed so pass a callback function and it wil give you latest nodes |
+| customStyling     | object   | {}                                             | any style key value                 | you can pass object of style e.g {fontSize:"18px"}                                                                                                    |
 
 # Hi, I'm Arslan Ahmed Shaad! 👋
 

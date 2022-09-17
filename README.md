@@ -26,12 +26,7 @@ This project have following features :
 
 ## Demo
 
-please watch the demo to learn how you can take full advantage from this package
-it is very powerful but light package that includes both tree and checkbox functionality
-[video](https://stackblitz.com/edit/react-judiep)
-Note:(video is not ready yet)
-you can test my package from this link
-[testing](https://stackblitz.com/edit/react-judiep)
+please watch the demo to learn how you can take full advantage from this package it is very powerful but light package that includes both tree and checkbox functionality [video](https://stackblitz.com/edit/react-judiep) Note:(video is not ready yet) you can test my package from this link [testing](https://stackblitz.com/edit/react-judiep)
 
 ## Fake json data for testing
 
@@ -95,39 +90,53 @@ export default function App() {
   const handeleSave = (chklist) => {
     console.log("handeleSave", chklist);
   };
-  return (
-    <TreeView
-      filternodes={Nodes}
-      expanded={expanded}
-      handleExpand={handleExpand}
-      changeState={handleCheck}
-    />
-  );
+  return <TreeView filternodes={Nodes} expanded={expanded} handleExpand={handleExpand} changeState={handleCheck} />;
 }
 ```
 
 ## Properties
 
-| Property          | type     | Default                                        | options                             | Description                                                                                                                                           |
-| ----------------- | -------- | ---------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| filternodes       | array    | []                                             |                                     | in this prop you will pass array of object                                                                                                            |
-| expanded          | array    | []                                             |                                     | in this prop you will pass array of strings which you want to expand initialiy eg :["animals","cat"]                                                  |
-| handleExpand      | function |                                                |                                     | in this prop you will pass a call back function which return the array of string which are expanded                                                   |
-| column            | number   | 6                                              | 1 to 12                             | how many columns you want ro divide your tree. this is based on bootstrap grid                                                                        |
-| expandIcon        | element  | "<img src={folderOpen} alt="expandicon" />"    | element or tag                      | change the expand icon.you can use react-icons and also html tags                                                                                     |
-| compressIcon      | element  | "<img src={folderClose} alt="compressicon" />" | element or tag                      | change the compress icon.you can use react-icons and also html tags                                                                                   |
-| deleteIcon        | element  | "<img src={deleteicon} alt="deleteicon" />"    | element or tag                      | change the delete icon.you can use react-icons and also html tags                                                                                     |
-| addIcon           | element  | "<img src={addicon} alt="addicon" />"          | element or tag                      | change the add icon.you can use react-icons and also html tags                                                                                        |
-| horizontalSpacing | string   | "14px"                                         | any value in px                     | add margin-left to the each column of tree                                                                                                            |
-| verticalSpacing   | string   | "5px"                                          | any value in px                     | add margin-bottom to the each column of tree                                                                                                          |
-| borderLeft        | string   | "none"                                         | "1px solid red"                     | add border-left(just for styling)                                                                                                                     |
-| saveTree          | function |                                                |                                     | if you want to save changes pass callback function                                                                                                    |
-| savebtnClass      | string   | "rtc-save-button"                              | "btn btn-success" or any othe class | you can style the save btn by adding your own custom class                                                                                            |
-| allowCheck        | boolean  | true                                           | true or false                       | if you dont want the checkbox functionality then pass false                                                                                           |
-| allowDelete       | boolean  | false                                          | true or false                       | if you want to delete the node then pass true                                                                                                         |
-| allowAdd          | boolean  | false                                          | true or false                       | if you want to add the new node then pass true                                                                                                        |
-| changeState       | function |                                                |                                     | when the checkbox is checked or unchecked or node is deleted this props should be passed so pass a callback function and it wil give you latest nodes |
-| customStyling     | object   | {}                                             | any style key value                 | you can pass object of style e.g {fontSize:"18px"}                                                                                                    |
+| Property           | type      | Default                                            | options       | Description                                                                                                                                                                                 |
+| ------------------ | --------- | -------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| filternodes        | array     | []                                                 |               | in this prop you will pass array of object                                                                                                                                                  |
+| expanded           | array     | []                                                 |               | in this prop you will pass array of id's which you want to expand initialiy                                                                                                                 |
+| handleExpand       | function  |                                                    |               | in this prop you will pass a call back function which return the array of id's which are expanded                                                                                           |
+| changeState        | function  |                                                    |               | in this prop you will pass a call back function which return latest nodes                                                                                                                   |
+| column             | number    | 12                                                 | 1 to 12       | divide your tree in columns. this prop will only apply on first level of nodes. this is just like bootstrap grid system                                                                     |
+| onNodeClick        | function  |                                                    |               | if you want to click on single node and want to get data of single node then use this prop. it need callback function. it will give you an object which contains two keys "path" and "node" |
+| onNodeClickOptions | object    | { allowExpand: false, key: "text", delimiter: "/"} |               | options to set on onNodeClick function                                                                                                                                                      |
+| customStyling      | object    | {}                                                 |               | pass css styling to give style to your tree                                                                                                                                                 |
+| horizontalSpacing  | string    | "23px"                                             |               | add spacing between each node horizontally                                                                                                                                                  |
+| verticalSpacing    | string    | "0px"                                              |               | add spacing between each node vertically                                                                                                                                                    |
+| borderLeft         | string    | "none"                                             |               | adds border to each node                                                                                                                                                                    |
+| allowCheck         | boolean   | true                                               | true or false | if you dont want the checkbox functionality then pass false                                                                                                                                 |
+| allowDelete        | boolean   | true                                               | true or false | if you want to delete node. after deleteing the node you will get the latest noded in changeState function                                                                                  |
+| allowAdd           | boolean   | true                                               | true or false | if you want to add new node.                                                                                                                                                                |
+| addText            | string    | "Add New Node"                                     |               | if you want to change the text.                                                                                                                                                             |
+| ref                | reference |                                                    |               | pass reference                                                                                                                                                                              |
+| icons              | object    |                                                    |               | if you want to change the icons                                                                                                                                                             |
+
+## icons Properties
+
+| Property         |
+| ---------------- |
+| compressIcon     |
+| expandIcon       |
+| nodeCompressIcon |
+| nodeExpandIcon   |
+| nonNodeIcon      |
+| deleteIcon       |
+| addIcon          |
+
+## nodes Properties
+
+| Property | Description                                |
+| -------- | ------------------------------------------ |
+| text     | any string                                 |
+| value    | any string                                 |
+| status   | boolean true or false                      |
+| id       | must b unique id                           |
+| nodes    | pass empty array if you dont want children |
 
 # Hi, I'm Arslan Ahmed Shaad! 👋
 

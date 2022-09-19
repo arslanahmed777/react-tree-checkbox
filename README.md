@@ -14,15 +14,19 @@ Install react-tree-checkbox with npm
 
 This project have following features :
 
+- no dependencies
+- very minimal size
 - Responsive (you can give columns to show how you should divide your tree)
 - Toggle between tree and checkbox tree (if you dont want check box functionality then simply pass allowCheck={false} now you have only tree)
-- You can also change the icons (you can use react-icons or if you are using cdn then you can simply pass expanIcon={<i className="fa fa-eye"></i>})
-- In tree you can also link (you can pass any html tag in nodes)
-- You can save the nodes by applying function
+- You can also change the icons (you can use react-icons or anyother package)
 - you can add spacing both horizontal and vertical
 - you can do custom styling the size of your whole tree with only one prop (customStyling)
 - you can delete the node by passing allowDelete to true
 - you can add the new node by passing allowAdd to true
+- you can get the path of the node e.g "/app/http/providers/index.js"
+- you can click on single node aswell and get its information
+- By default our tree uses 4 keys in object (value,text,id,status,nodes) but you can pass your own key and value aswell. your keys and value will not interfere our tree
+- tree is capable of supporting a large number of nodes at once.
 
 ## Demo
 
@@ -90,7 +94,14 @@ export default function App() {
   const handeleSave = (chklist) => {
     console.log("handeleSave", chklist);
   };
-  return <TreeView filternodes={Nodes} expanded={expanded} handleExpand={handleExpand} changeState={handleCheck} />;
+  return (
+    <TreeView
+      filternodes={Nodes}
+      expanded={expanded}
+      handleExpand={handleExpand}
+      changeState={handleCheck}
+    />
+  );
 }
 ```
 
@@ -150,4 +161,5 @@ If you have any feedback, please reach out to us at ashi3610@gmail.com
 
 ## Authors
 
-- [@Arslan Ahmed](https://github.com/arslanahmed777)
+- [@Arslan Ahmed Shaad](https://github.com/arslanahmed777)
+- [@Danish](https://github.com/Rajadanish53)

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+
+- Added bundled TypeScript declarations via `index.d.ts`.
+- Added `types` field and `exports.types` mapping in `package.json` to remove TS7016 warnings for consumers.
+
 ## 1.3.0
 
 - Added dual-package output in `dist/`:

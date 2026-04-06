@@ -105,6 +105,20 @@ export default function App() {
 }
 ```
 
+## Interop
+
+Default import (ESM / Vite / Webpack):
+
+```javascript
+import TreeView from "react-tree-checkbox";
+```
+
+Require import (CommonJS / Node):
+
+```javascript
+const TreeView = require("react-tree-checkbox");
+```
+
 ## Properties
 
 | Property           | type      | Default                                            | options       | Description                                                                                                                                                                                 |

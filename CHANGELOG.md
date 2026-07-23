@@ -7,6 +7,7 @@
 - Added optional `handleDeleteNode` callback; when omitted, package still deletes locally.
 - Node label now prefers `value` and falls back to `text`.
 - Updated TypeScript declarations and README for the new API.
+- Added GitHub Pages demo website under `website/` with interactive examples (`docs:dev`, `docs:build`, `docs:deploy`).
 
 ## 1.3.1
 

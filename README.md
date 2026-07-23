@@ -31,11 +31,23 @@ This project have following features :
 
 ## Demo
 
-please watch the demo to learn how you can take full advantage from this package it is very powerful but light package that includes both tree and checkbox functionality [video](https://stackblitz.com/edit/react-judiep) Note:(video is not ready yet) you can test my package from this link [testing](https://stackblitz.com/edit/react-judiep)
+Interactive examples are available on GitHub Pages:
+
+[https://arslanahmed777.github.io/react-tree-checkbox/](https://arslanahmed777.github.io/react-tree-checkbox/)
+
+Local demo commands:
+
+```bash
+npm run docs:dev
+npm run docs:build
+npm run docs:deploy
+```
 
 ## Fake json data for testing
 
 [Link](https://stackblitz.com/edit/react-judiep?file=src%2Fnodes.js)
+
+You can also use the sample hierarchy in [`nodes.js`](./nodes.js).
 
 ## Usage/Examples
 

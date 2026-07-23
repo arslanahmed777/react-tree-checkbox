@@ -1,3 +1,21 @@
+# Source / build tooling (consumers use dist/)
 /components
+/main.js
+/build
 .babelrc
+babel.config.js
 webpack.config.js
+
+# Docs site (GitHub Pages only)
+/website
+/nodes.js
+
+# Local scripts / smoke tests
+/scripts
+
+# Lockfile / editor / git extras (not needed on npm)
+package-lock.json
+.gitignore
+.gitattributes
+.DS_Store
+*.log

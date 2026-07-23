@@ -185,7 +185,7 @@ const [expanded, setExpanded] = useState([1, 2]);
   expanded={expanded}
   handleExpand={setExpanded}
   changeState={setNodes}
-/>`;function oe(){let[e,t]=(0,b.useState)(w),[n,r]=(0,b.useState)([1,2]);return(0,x.jsx)(ie,{id:`basic`,title:`Basic Example`,description:`Start with a simple checkbox tree. Parent and child check states update through changeState.`,code:ae,children:(0,x.jsx)(re,{filternodes:e,expanded:n,handleExpand:r,changeState:t})})}var se=`<TreeView
+/>`;function oe(){let[e,t]=(0,b.useState)(w),[n,r]=(0,b.useState)([1,2]);return(0,x.jsx)(ie,{id:`basic`,title:`Basic Example test 1.4.1`,description:`Start with a simple checkbox tree. Parent and child check states update through changeState.`,code:ae,children:(0,x.jsx)(re,{filternodes:e,expanded:n,handleExpand:r,changeState:t})})}var se=`<TreeView
   filternodes={nodes}
   expanded={expanded}
   handleExpand={setExpanded}

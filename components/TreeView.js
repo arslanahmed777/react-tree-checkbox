@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import PropTypes from 'prop-types';
 import deleteicon from "./deleteIcon.svg"
 import chevronRight from "./chevronRight.svg"
@@ -6,6 +6,23 @@ import chevronDown from "./chevronDown.svg"
 import addicon from "./addicon.svg"
 import editicon from "./editIcon.svg"
 import "./Tree.css";
+
+const defaultIcons = {
+    compressIcon: <img src={chevronRight} alt="compressicon" />,
+    expandIcon: <img src={chevronDown} alt="expandicon" />,
+    nodeCompressIcon: null,
+    nodeExpandIcon: null,
+    nonNodeIcon: null,
+    deleteIcon: <img src={deleteicon} alt="deleteicon" />,
+    addIcon: <img src={addicon} alt="addicon" />,
+    editIcon: <img src={editicon} alt="editicon" />,
+};
+
+const defaultOnNodeClickOptions = {
+    allowExpand: false,
+    key: "text",
+    delimiter: "/"
+};
 
 // ******************************** CUSTOM HELPER FUNCTIONS *********************
 let findNode = (nodes, value, status) => {
@@ -217,7 +234,30 @@ const getPath = (obj, id, key, delimiter) => {
 
 
 
-const TreeView = forwardRef(({ icons, handleAddNode, handleEditNode, handleDeleteNode, onNodeClickOptions, onNodeClick, filternodes = [], column, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, allowEdit, addText }, ref) => {
+const TreeView = forwardRef(({
+    icons: iconsProp,
+    handleAddNode,
+    handleEditNode,
+    handleDeleteNode,
+    onNodeClickOptions: onNodeClickOptionsProp,
+    onNodeClick,
+    filternodes = [],
+    column = 12,
+    expanded,
+    handleExpand,
+    changeState,
+    customStyling = {},
+    horizontalSpacing = "23px",
+    verticalSpacing = "0px",
+    borderLeft = "none",
+    allowCheck = true,
+    allowDelete = false,
+    allowAdd = false,
+    allowEdit = false,
+    addText = "Add New Node",
+}, ref) => {
+    const icons = { ...defaultIcons, ...iconsProp };
+    const onNodeClickOptions = { ...defaultOnNodeClickOptions, ...onNodeClickOptionsProp };
     useImperativeHandle(ref, () => {
         return {
             addNewNode,
@@ -395,35 +435,6 @@ const TreeNode = ({ icons, handleAddNode, handleEditNode, handleDeleteNode, onNo
 };
 
 TreeView.displayName = "TreeView"
-
-// Specifies the default values for props:
-TreeView.defaultProps = {
-    borderLeft: 'none',
-    customStyling: {},
-    icons: {
-        compressIcon: <img src={chevronRight} alt="compressicon" />,
-        expandIcon: <img src={chevronDown} alt="expandicon" />,
-        nodeCompressIcon: null,
-        nodeExpandIcon: null,
-        nonNodeIcon: null,
-        deleteIcon: <img src={deleteicon} alt="deleteicon" />,
-        addIcon: <img src={addicon} alt="addicon" />,
-        editIcon: <img src={editicon} alt="editicon" />,
-    },
-    column: 12,
-    allowCheck: true,
-    allowDelete: false,
-    allowAdd: false,
-    allowEdit: false,
-    horizontalSpacing: "23px",
-    verticalSpacing: "0px",
-    addText: "Add New Node",
-    onNodeClickOptions: {
-        allowExpand: false,
-        key: "text",
-        delimiter: "/"
-    }
-};
 
 TreeView.propTypes = {
     borderLeft: PropTypes.string,

@@ -367,6 +367,21 @@ html.isReady .hero {
   font-size: 0.92rem;
 }
 
+.exampleError {
+  margin: 0 0 2rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(180, 50, 50, 0.35);
+  border-radius: var(--radius);
+  background: rgba(255, 240, 240, 0.95);
+  color: #7a1f1f;
+}
+
+.exampleError pre {
+  margin: 0.6rem 0 0;
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+}
+
 .demoIcon {
   display: inline-block;
   min-width: 1rem;

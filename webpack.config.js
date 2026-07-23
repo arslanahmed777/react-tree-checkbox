@@ -25,12 +25,18 @@ var baseConfig = {
   externals: {
     react: "react",
     "react-dom": "react-dom",
+    "react/jsx-runtime": "react/jsx-runtime",
   },
 };
 
 var esmConfig = {
   ...baseConfig,
   externalsType: "module",
+  externals: {
+    react: "module react",
+    "react-dom": "module react-dom",
+    "react/jsx-runtime": "module react/jsx-runtime",
+  },
   target: ["web", "es2020"],
   output: {
     path: path.resolve("dist"),

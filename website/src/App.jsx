@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ErrorBoundary from "./components/ErrorBoundary";
 import BasicExample from "./components/BasicExample";
 import CustomIconsExample from "./components/CustomIconsExample";
 import HideCheckboxesExample from "./components/HideCheckboxesExample";
@@ -15,6 +16,16 @@ const navItems = [
   { href: "#node-click", label: "Click path" },
   { href: "#styling", label: "Styling" },
   { href: "#large-data", label: "Large data" },
+];
+
+const examples = [
+  BasicExample,
+  CustomIconsExample,
+  HideCheckboxesExample,
+  CrudExample,
+  NodeClickExample,
+  StylingExample,
+  LargeDataExample,
 ];
 
 export default function App() {
@@ -85,13 +96,11 @@ export default function App() {
           </pre>
         </section>
 
-        <BasicExample />
-        <CustomIconsExample />
-        <HideCheckboxesExample />
-        <CrudExample />
-        <NodeClickExample />
-        <StylingExample />
-        <LargeDataExample />
+        {examples.map((Example, index) => (
+          <ErrorBoundary key={Example.name || index}>
+            <Example />
+          </ErrorBoundary>
+        ))}
       </main>
 
       <footer className="siteFooter">

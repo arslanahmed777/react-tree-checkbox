@@ -4,19 +4,30 @@ import { basicNodes } from "../data/basicNodes";
 import ExampleSection from "./ExampleSection";
 
 const code = `const [nodes, setNodes] = useState(basicNodes);
-const [expanded, setExpanded] = useState([1, 2]);
+const [expanded, setExpanded] = useState([]);
+const handleExpand = (newArray) => {
+    setExpanded([...newArray]);
+  };
+  const handleCheck = (treeNodes) => {
+    setNodes([...treeNodes]);
+  };
 
 <TreeView
   filternodes={nodes}
   expanded={expanded}
-  handleExpand={setExpanded}
-  changeState={setNodes}
+  handleExpand={handleExpand}
+  changeState={handleCheck}
 />`;
 
 export default function BasicExample() {
   const [nodes, setNodes] = useState(basicNodes);
-  const [expanded, setExpanded] = useState([1, 2]);
-
+  const [expanded, setExpanded] = useState([]);
+  const handleExpand = (newArray) => {
+    setExpanded([...newArray]);
+  };
+  const handleCheck = (treeNodes) => {
+    setNodes([...treeNodes]);
+  };
   return (
     <ExampleSection
       id="basic"
@@ -27,8 +38,8 @@ export default function BasicExample() {
       <TreeView
         filternodes={nodes}
         expanded={expanded}
-        handleExpand={setExpanded}
-        changeState={setNodes}
+        handleExpand={handleExpand}
+        changeState={handleCheck}
       />
     </ExampleSection>
   );

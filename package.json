@@ -22,7 +22,7 @@
     "build": "webpack && node ./scripts/postBuildInterop.cjs",
     "test": "npm run verify:interop",
     "verify:interop": "npm run build && node ./scripts/verifyInterop.mjs",
-    "docs:dev": "npm run build && vite --config website/vite.config.js",
+    "docs:dev": "vite --config website/vite.config.js",
     "docs:build": "npm run build && vite build --config website/vite.config.js",
     "docs:preview": "vite preview --config website/vite.config.js",
     "docs:deploy": "npm run docs:build && gh-pages -d website/dist"

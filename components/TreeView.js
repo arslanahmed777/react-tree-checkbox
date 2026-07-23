@@ -1,10 +1,10 @@
-
 import React, { forwardRef, useImperativeHandle } from "react";
 import PropTypes from 'prop-types';
 import deleteicon from "./deleteIcon.svg"
 import chevronRight from "./chevronRight.svg"
 import chevronDown from "./chevronDown.svg"
 import addicon from "./addicon.svg"
+import editicon from "./editIcon.svg"
 import "./Tree.css";
 
 // ******************************** CUSTOM HELPER FUNCTIONS *********************
@@ -152,6 +152,22 @@ const add_New_Node = (nodeid, nodeobj, allnodes) => {
     return allnodes
 }
 
+// Finds a node by id and updates only text/value (keeps id + children)
+const update_Node = (nodeid, nodeobj, allnodes) => {
+    allnodes.forEach((node, index) => {
+        if (node.id === nodeid) {
+            allnodes[index] = {
+                ...allnodes[index],
+                text: nodeobj.text,
+                value: nodeobj.value || nodeobj.text.replace(/\s/g, "").toLowerCase(),
+            };
+        } else if (node.nodes) {
+            update_Node(nodeid, nodeobj, node.nodes);
+        }
+    });
+    return allnodes;
+}
+
 const uniqueId = (length = 16) => {
     return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
 }
@@ -201,10 +217,11 @@ const getPath = (obj, id, key, delimiter) => {
 
 
 
-const TreeView = forwardRef(({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filternodes = [], column, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, addText }, ref) => {
+const TreeView = forwardRef(({ icons, handleAddNode, handleEditNode, handleDeleteNode, onNodeClickOptions, onNodeClick, filternodes = [], column, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, allowEdit, addText }, ref) => {
     useImperativeHandle(ref, () => {
         return {
             addNewNode,
+            editNode,
         };
     });
 
@@ -254,6 +271,14 @@ const TreeView = forwardRef(({ icons, handleAddNode, onNodeClickOptions, onNodeC
 
     }
 
+    // Updates an existing node by id (used from parent via treeRef.current.editNode)
+    const editNode = (nodeid, obj) => {
+        if (!obj.hasOwnProperty('text') || obj.text === "") {
+            return alert('key "text" is missing in the object or passed empty string')
+        }
+        changeState(update_Node(nodeid, obj, filternodes))
+    }
+
     return (
 
         <div className="rtc-row" style={customStyling}>
@@ -268,7 +293,7 @@ const TreeView = forwardRef(({ icons, handleAddNode, onNodeClickOptions, onNodeC
             {filternodes.map((items, i) => {
                 return (
                     <div key={i} className={`rtc-scroll rtc-col-${column}`} style={{ overflowX: "auto" }}>
-                        <TreeNode icons={icons} handleAddNode={handleAddNode} onNodeClickOptions={onNodeClickOptions} onNodeClick={onNodeClick} filternodes={filternodes} nodes={items} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
+                        <TreeNode icons={icons} handleAddNode={handleAddNode} handleEditNode={handleEditNode} handleDeleteNode={handleDeleteNode} onNodeClickOptions={onNodeClickOptions} onNodeClick={onNodeClick} filternodes={filternodes} nodes={items} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} allowEdit={allowEdit} />
                     </div>
                 )
             })}
@@ -281,14 +306,14 @@ const Tree = (props) => {
     return (
         <>
             {props.data.map((items, i) => (
-                <TreeNode icons={props.icons} handleAddNode={props.handleAddNode} onNodeClickOptions={props.onNodeClickOptions} onNodeClick={props.onNodeClick} filternodes={props.filternodes} key={i} nodes={items} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} allowAdd={props.allowAdd} />
+                <TreeNode icons={props.icons} handleAddNode={props.handleAddNode} handleEditNode={props.handleEditNode} handleDeleteNode={props.handleDeleteNode} onNodeClickOptions={props.onNodeClickOptions} onNodeClick={props.onNodeClick} filternodes={props.filternodes} key={i} nodes={items} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} allowAdd={props.allowAdd} allowEdit={props.allowEdit} />
             ))}
 
         </>
     );
 };
 
-const TreeNode = ({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filternodes, nodes, expanded, handleExpand, changeState, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd }) => {
+const TreeNode = ({ icons, handleAddNode, handleEditNode, handleDeleteNode, onNodeClickOptions, onNodeClick, filternodes, nodes, expanded, handleExpand, changeState, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, allowEdit }) => {
     const hasChild = nodes.nodes.length > 0 ? true : false;
     const handleVisibility = (e) => {
         const hasnodes = e.nodes.length > 0 ? true : false;
@@ -316,11 +341,14 @@ const TreeNode = ({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filte
     const handleCheck = (e) => {
         changeState(findNode(filternodes, parseInt(e.target.value), e.target.checked))
     }
-    const handleDeleteNode = (nodeid, allnodes) => {
-        if (window.confirm("Are you sure you want to delete")) {
-            changeState(getupdatednodes(nodeid, allnodes))
-        }
 
+    const onDeleteClick = (node) => {
+        if (handleDeleteNode) {
+            handleDeleteNode(node)
+            return
+        }
+        // fallback: local delete if parent handler is not provided
+        changeState(getupdatednodes(node.id, filternodes))
     }
 
     return (
@@ -347,17 +375,19 @@ const TreeNode = ({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filte
                                 icons.nonNodeIcon ? <span>{icons.nonNodeIcon}</span> : ""
 
                             }
-                            <span style={{ cursor: onNodeClick ? "pointer" : "auto" }} onClick={(e) => handleSingleNode(nodes)} >     {nodes.text}</span>
+                            <span style={{ cursor: onNodeClick ? "pointer" : "auto" }} onClick={(e) => handleSingleNode(nodes)} >     {nodes.value || nodes.text}</span>
 
-                            {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{icons.deleteIcon}</span> : null}
+                            {allowDelete ? <span title="Delete" onClick={() => onDeleteClick(nodes)} className="rtc-deleteicon">{icons.deleteIcon}</span> : null}
+                            {allowEdit ? <span title="Edit" onClick={() => handleEditNode(nodes)} className="rtc-editicon">{icons.editIcon}</span> : null}
                             {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{icons.addIcon}</span> : null}
+
                         </span>
                     </span>
                 </div>
             </div>
             {expanded.includes(nodes.id) && (
                 <div style={{ borderLeft, paddingLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 1px )` }}>
-                    <Tree icons={icons} handleAddNode={handleAddNode} onNodeClickOptions={onNodeClickOptions} onNodeClick={onNodeClick} filternodes={filternodes} data={nodes.nodes} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
+                    <Tree icons={icons} handleAddNode={handleAddNode} handleEditNode={handleEditNode} handleDeleteNode={handleDeleteNode} onNodeClickOptions={onNodeClickOptions} onNodeClick={onNodeClick} filternodes={filternodes} data={nodes.nodes} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} allowEdit={allowEdit} />
                 </div>
             )}
         </>
@@ -377,12 +407,14 @@ TreeView.defaultProps = {
         nodeExpandIcon: null,
         nonNodeIcon: null,
         deleteIcon: <img src={deleteicon} alt="deleteicon" />,
-        addIcon: <img src={addicon} alt="deleteicon" />,
+        addIcon: <img src={addicon} alt="addicon" />,
+        editIcon: <img src={editicon} alt="editicon" />,
     },
     column: 12,
     allowCheck: true,
     allowDelete: false,
     allowAdd: false,
+    allowEdit: false,
     horizontalSpacing: "23px",
     verticalSpacing: "0px",
     addText: "Add New Node",
@@ -398,6 +430,7 @@ TreeView.propTypes = {
     allowCheck: PropTypes.bool,
     allowDelete: PropTypes.bool,
     allowAdd: PropTypes.bool,
+    allowEdit: PropTypes.bool,
     verticalSpacing: PropTypes.string,
     horizontalSpacing: PropTypes.string,
     customStyling: PropTypes.object,
@@ -408,6 +441,8 @@ TreeView.propTypes = {
     changeState: PropTypes.func,
     onAllowAdd: PropTypes.func,
     handleAddNode: PropTypes.func,
+    handleEditNode: PropTypes.func,
+    handleDeleteNode: PropTypes.func,
     onNodeClick: PropTypes.func,
     onNodeClickOptions: PropTypes.object,
     savebtnClass: PropTypes.string,

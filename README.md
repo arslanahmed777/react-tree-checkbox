@@ -23,6 +23,7 @@ This project have following features :
 - you can do custom styling the size of your whole tree with only one prop (customStyling)
 - you can delete the node by passing allowDelete to true
 - you can add the new node by passing allowAdd to true
+- you can edit the node by passing allowEdit to true
 - you can get the path of the node e.g "/app/http/providers/index.js"
 - you can click on single node aswell and get its information
 - By default our tree uses 4 keys in object (value,text,id,status,nodes) but you can pass your own key and value aswell. your keys and value will not interfere our tree
@@ -39,8 +40,9 @@ please watch the demo to learn how you can take full advantage from this package
 ## Usage/Examples
 
 ```javascript
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import TreeView from "react-tree-checkbox";
+
 const nodes = [
   {
     value: "animals",
@@ -80,26 +82,52 @@ const nodes = [
     id: 5,
   },
 ];
+
 export default function App() {
+  const treeRef = useRef(null);
   const [Nodes, setNodes] = useState(nodes);
   const [expanded, setExpanded] = useState([]);
+
   const handleExpand = (newArray) => {
     console.log("handleExpand", newArray);
     setExpanded([...newArray]);
   };
+
   const handleCheck = (treeNodes) => {
     console.log("handleCheck", treeNodes);
     setNodes([...treeNodes]);
   };
-  const handeleSave = (chklist) => {
-    console.log("handeleSave", chklist);
+
+  const handleAddNode = (nodeId) => {
+    console.log("handleAddNode", nodeId);
+    // open your add modal / form here, then call:
+    // treeRef.current.addNewNode(nodeId, { text: "New Node", value: "new-node" })
   };
+
+  const handleEditNode = (node) => {
+    console.log("handleEditNode", node);
+    // open your edit modal / form here, then call:
+    // treeRef.current.editNode(node.id, { text: "Updated Node", value: "updated-node" })
+  };
+
+  const handleDeleteNode = (node) => {
+    console.log("handleDeleteNode", node);
+    // optional custom delete flow; if omitted, package deletes locally
+  };
+
   return (
     <TreeView
+      ref={treeRef}
       filternodes={Nodes}
       expanded={expanded}
       handleExpand={handleExpand}
       changeState={handleCheck}
+      allowAdd={true}
+      allowEdit={true}
+      allowDelete={true}
+      handleAddNode={handleAddNode}
+      handleEditNode={handleEditNode}
+      handleDeleteNode={handleDeleteNode}
     />
   );
 }
@@ -135,10 +163,14 @@ const TreeView = require("react-tree-checkbox");
 | verticalSpacing    | string    | "0px"                                              |               | add spacing between each node vertically                                                                                                                                                    |
 | borderLeft         | string    | "none"                                             |               | adds border to each node                                                                                                                                                                    |
 | allowCheck         | boolean   | true                                               | true or false | if you dont want the checkbox functionality then pass false                                                                                                                                 |
-| allowDelete        | boolean   | true                                               | true or false | if you want to delete node. after deleteing the node you will get the latest noded in changeState function                                                                                  |
-| allowAdd           | boolean   | true                                               | true or false | if you want to add new node.                                                                                                                                                                |
+| allowDelete        | boolean   | false                                              | true or false | show delete icon. if `handleDeleteNode` is provided it will be called with the node object; otherwise package deletes locally and returns latest nodes via `changeState`                     |
+| allowAdd           | boolean   | false                                              | true or false | show add icon / top-level add action. use with `handleAddNode` and then call `ref.current.addNewNode(...)`                                                                                  |
+| allowEdit          | boolean   | false                                              | true or false | show edit icon. use with `handleEditNode` and then call `ref.current.editNode(...)`                                                                                                         |
+| handleAddNode      | function  |                                                    |               | callback when add is clicked. receives `nodeId` (`0` for root add)                                                                                                                          |
+| handleEditNode     | function  |                                                    |               | callback when edit is clicked. receives the full node object                                                                                                                                |
+| handleDeleteNode   | function  |                                                    |               | optional callback when delete is clicked. receives the full node object. if omitted, package deletes the node locally                                                                       |
 | addText            | string    | "Add New Node"                                     |               | if you want to change the text.                                                                                                                                                             |
-| ref                | reference |                                                    |               | pass reference                                                                                                                                                                              |
+| ref                | reference |                                                    |               | pass reference. exposes `addNewNode(nodeId, obj)` and `editNode(nodeId, obj)`                                                                                                               |
 | icons              | object    |                                                    |               | if you want to change the icons                                                                                                                                                             |
 
 ## icons Properties
@@ -152,16 +184,24 @@ const TreeView = require("react-tree-checkbox");
 | nonNodeIcon      |
 | deleteIcon       |
 | addIcon          |
+| editIcon         |
 
 ## nodes Properties
 
-| Property | Description                                |
-| -------- | ------------------------------------------ |
-| text     | any string                                 |
-| value    | any string                                 |
-| status   | boolean true or false                      |
-| id       | must b unique id                           |
-| nodes    | pass empty array if you dont want children |
+| Property | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| text     | any string / React node                                            |
+| value    | any string (label shown prefers `value`, falls back to `text`)     |
+| status   | boolean true or false                                              |
+| id       | must b unique id                                                   |
+| nodes    | pass empty array if you dont want children                         |
+
+## Ref methods
+
+| Method     | Signature       | Description                                                             |
+| ---------- | --------------- | ----------------------------------------------------------------------- |
+| addNewNode | `(nodeId, obj)` | add a new node under `nodeId` (`0` adds at root). `obj.text` is required |
+| editNode   | `(nodeId, obj)` | update an existing node by id. `obj.text` is required; `value` is optional |
 
 # Hi, I'm Arslan Ahmed Shaad! 👋
 

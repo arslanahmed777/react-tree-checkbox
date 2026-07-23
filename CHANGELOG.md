@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.1
+
+- Added edit support with `allowEdit`, `handleEditNode`, and `editIcon`.
+- Exposed `editNode(nodeId, obj)` on the component ref (alongside existing `addNewNode`).
+- Added optional `handleDeleteNode` callback; when omitted, package still deletes locally.
+- Node label now prefers `value` and falls back to `text`.
+- Updated TypeScript declarations and README for the new API.
+
 ## 1.3.1
 
 - Added bundled TypeScript declarations via `index.d.ts`.

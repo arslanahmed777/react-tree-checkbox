@@ -28,10 +28,12 @@ export interface TreeIcons {
   nonNodeIcon?: React.ReactNode;
   deleteIcon?: React.ReactNode;
   addIcon?: React.ReactNode;
+  editIcon?: React.ReactNode;
 }
 
 export interface TreeViewRef {
   addNewNode: (nodeId: number, obj: Partial<TreeNodeData> & { text: string }) => void;
+  editNode: (nodeId: number, obj: Partial<TreeNodeData> & { text: string }) => void;
 }
 
 export interface TreeViewProps {
@@ -49,9 +51,12 @@ export interface TreeViewProps {
   allowCheck?: boolean;
   allowDelete?: boolean;
   allowAdd?: boolean;
+  allowEdit?: boolean;
   addText?: string;
   icons?: TreeIcons;
   handleAddNode?: (nodeId: number) => void;
+  handleEditNode?: (node: TreeNodeData) => void;
+  handleDeleteNode?: (node: TreeNodeData) => void;
 }
 
 declare const TreeView: React.ForwardRefExoticComponent<

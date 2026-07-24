@@ -254,7 +254,6 @@ const TreeView = forwardRef(({
     allowDelete = false,
     allowAdd = false,
     allowEdit = false,
-    addText = "Add New Node",
 }, ref) => {
     const icons = { ...defaultIcons, ...iconsProp };
     const onNodeClickOptions = { ...defaultOnNodeClickOptions, ...onNodeClickOptionsProp };
@@ -322,13 +321,7 @@ const TreeView = forwardRef(({
     return (
 
         <div className="rtc-row" style={customStyling}>
-            {allowAdd ? (
-                <div className={`rtc-scroll rtc-col-${column}`}>
-                    <span title={addText} style={{ cursor: "pointer" }} onClick={() => handleAddNode(0)} >
-                        {icons.addIcon}<span style={{ marginLeft: 7 }}>{addText}</span>
-                    </span>
-                </div>
-            ) : null}
+
 
             {filternodes.map((items, i) => {
                 return (
@@ -419,7 +412,7 @@ const TreeNode = ({ icons, handleAddNode, handleEditNode, handleDeleteNode, onNo
 
                             {allowDelete ? <span title="Delete" onClick={() => onDeleteClick(nodes)} className="rtc-deleteicon">{icons.deleteIcon}</span> : null}
                             {allowEdit ? <span title="Edit" onClick={() => handleEditNode(nodes)} className="rtc-editicon">{icons.editIcon}</span> : null}
-                            {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{icons.addIcon}</span> : null}
+                            {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes)} className="rtc-addicon">{icons.addIcon}</span> : null}
 
                         </span>
                     </span>
@@ -457,7 +450,6 @@ TreeView.propTypes = {
     onNodeClick: PropTypes.func,
     onNodeClickOptions: PropTypes.object,
     savebtnClass: PropTypes.string,
-    addText: PropTypes.string,
     icons: PropTypes.object
 };
 

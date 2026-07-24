@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "react-tree-checkbox": ["./index.d.ts"]
+    },
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noImplicitAny": false
+  },
+  "include": [
+    "website/src/**/*",
+    "components/**/*",
+    "main.js",
+    "nodes.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "website/dist"
+  ]
+}

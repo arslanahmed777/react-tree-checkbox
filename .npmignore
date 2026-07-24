@@ -5,6 +5,9 @@
 .babelrc
 babel.config.js
 webpack.config.js
+eslint.config.mjs
+jsconfig.json
+.vscode
 
 # Docs site (GitHub Pages only)
 /website

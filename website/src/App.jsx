@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import BasicExample from "./components/BasicExample";
+import AllFeaturesExample from "./components/AllFeaturesExample";
 import CustomIconsExample from "./components/CustomIconsExample";
 import HideCheckboxesExample from "./components/HideCheckboxesExample";
 import CrudExample from "./components/CrudExample";
@@ -10,6 +11,7 @@ import LargeDataExample from "./components/LargeDataExample";
 
 const navItems = [
   { href: "#basic", label: "Basic" },
+  { href: "#all-features", label: "All Features" },
   { href: "#custom-icons", label: "Icons" },
   { href: "#hide-checkboxes", label: "No checkboxes" },
   { href: "#crud", label: "CRUD" },
@@ -20,6 +22,7 @@ const navItems = [
 
 const examples = [
   BasicExample,
+  AllFeaturesExample,
   CustomIconsExample,
   HideCheckboxesExample,
   CrudExample,

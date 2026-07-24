@@ -4,15 +4,15 @@ import { basicNodes } from "../data/basicNodes";
 import ExampleSection from "./ExampleSection";
 
 const code = `<TreeView
-  filternodes={nodes}
+  nodes={nodes}
   expanded={expanded}
-  handleExpand={setExpanded}
-  changeState={setNodes}
+  onExpandedChange={setExpanded}
+  onNodesChange={setNodes}
   column={6}
   horizontalSpacing="28px"
   verticalSpacing="8px"
   borderLeft="1px solid #cbd5e1"
-  customStyling={{
+  style={{
     padding: "12px",
     background: "#f8fafc",
   }}
@@ -26,19 +26,19 @@ export default function StylingExample() {
     <ExampleSection
       id="styling"
       title="Spacing & Columns Example"
-      description="Control layout with column, horizontalSpacing, verticalSpacing, borderLeft, and customStyling."
+      description="Control layout with column, horizontalSpacing, verticalSpacing, borderLeft, and style."
       code={code}
     >
       <TreeView
-        filternodes={nodes}
+        nodes={nodes}
         expanded={expanded}
-        handleExpand={setExpanded}
-        changeState={setNodes}
+        onExpandedChange={setExpanded}
+        onNodesChange={setNodes}
         column={6}
         horizontalSpacing="28px"
         verticalSpacing="8px"
         borderLeft="1px solid #cbd5e1"
-        customStyling={{
+        style={{
           padding: "12px",
           background: "#f8fafc",
         }}

@@ -17,9 +17,10 @@
   },
   "include": [
     "website/src/**/*",
-    "components/**/*",
+    "src/**/*",
     "main.js",
-    "nodes.js"
+    "nodes.js",
+    "tests/**/*"
   ],
   "exclude": [
     "node_modules",

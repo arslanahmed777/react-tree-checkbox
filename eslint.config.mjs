@@ -15,12 +15,13 @@ export default [
     ],
   },
   {
-    files: ["website/**/*.{js,jsx}", "components/**/*.{js,jsx}", "main.js", "nodes.js"],
+    files: ["website/**/*.{js,jsx}", "src/**/*.{js,jsx}", "main.js", "nodes.js", "tests/**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
       globals: {
         ...globals.browser,
+        ...globals.node,
       },
       parserOptions: {
         ecmaFeatures: {
@@ -48,7 +49,7 @@ export default [
       "no-unused-vars": [
         "warn",
         {
-          varsIgnorePattern: "^_",
+          varsIgnorePattern: "^(_|React)$",
           argsIgnorePattern: "^_",
         },
       ],

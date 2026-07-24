@@ -1,7 +1,9 @@
 var path = require("path");
+
 var baseConfig = {
   mode: "production",
   entry: "./main.js",
+  devtool: "source-map",
   module: {
     rules: [
       { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" },
@@ -21,6 +23,9 @@ var baseConfig = {
         ],
       },
     ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
   },
   externals: {
     react: "react",

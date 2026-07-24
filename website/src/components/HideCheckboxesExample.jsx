@@ -4,10 +4,10 @@ import { basicNodes } from "../data/basicNodes";
 import ExampleSection from "./ExampleSection";
 
 const code = `<TreeView
-  filternodes={nodes}
+  nodes={nodes}
   expanded={expanded}
-  handleExpand={setExpanded}
-  changeState={setNodes}
+  onExpandedChange={setExpanded}
+  onNodesChange={setNodes}
   allowCheck={false}
 />`;
 
@@ -23,10 +23,10 @@ export default function HideCheckboxesExample() {
       code={code}
     >
       <TreeView
-        filternodes={nodes}
+        nodes={nodes}
         expanded={expanded}
-        handleExpand={setExpanded}
-        changeState={setNodes}
+        onExpandedChange={setExpanded}
+        onNodesChange={setNodes}
         allowCheck={false}
       />
     </ExampleSection>

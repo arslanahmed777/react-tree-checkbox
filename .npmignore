@@ -1,12 +1,13 @@
 # Source / build tooling (consumers use dist/)
-/components
+/src
 /main.js
 /build
-.babelrc
 babel.config.js
 webpack.config.js
 eslint.config.mjs
 jsconfig.json
+vitest.config.js
+/tests
 .vscode
 
 # Docs site (GitHub Pages only)

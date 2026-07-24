@@ -1,0 +1,234 @@
+.rtc-tree {
+  --rtc-indent: 1.25rem;
+  --rtc-row-gap: 0.15rem;
+  --rtc-guide: transparent;
+  --rtc-focus-ring: 2px solid #2563eb;
+  --rtc-focus-offset: 2px;
+  --rtc-checkbox-size: 1rem;
+  --rtc-action-gap: 0.25rem;
+  --rtc-row-min-height: 1.75rem;
+  --rtc-text-color: inherit;
+  --rtc-muted-color: #6b7280;
+  --rtc-hover-bg: rgba(0, 0, 0, 0.04);
+  --rtc-disabled-opacity: 0.5;
+
+  box-sizing: border-box;
+  color: var(--rtc-text-color);
+  width: 100%;
+}
+
+.rtc-tree *,
+.rtc-tree *::before,
+.rtc-tree *::after {
+  box-sizing: border-box;
+}
+
+.rtc-tree__scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.rtc-tree__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* First-level nodes share a flex row so `column` can split them (1.x behavior) */
+.rtc-tree__list--columns {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.rtc-tree__item {
+  margin: 0;
+  padding: 0;
+}
+
+.rtc-tree__root--col-1 { flex: 0 0 auto; width: 8.33333333%; overflow-x: auto; }
+.rtc-tree__root--col-2 { flex: 0 0 auto; width: 16.66666667%; overflow-x: auto; }
+.rtc-tree__root--col-3 { flex: 0 0 auto; width: 25%; overflow-x: auto; }
+.rtc-tree__root--col-4 { flex: 0 0 auto; width: 33.33333333%; overflow-x: auto; }
+.rtc-tree__root--col-5 { flex: 0 0 auto; width: 41.66666667%; overflow-x: auto; }
+.rtc-tree__root--col-6 { flex: 0 0 auto; width: 50%; overflow-x: auto; }
+.rtc-tree__root--col-7 { flex: 0 0 auto; width: 58.33333333%; overflow-x: auto; }
+.rtc-tree__root--col-8 { flex: 0 0 auto; width: 66.66666667%; overflow-x: auto; }
+.rtc-tree__root--col-9 { flex: 0 0 auto; width: 75%; overflow-x: auto; }
+.rtc-tree__root--col-10 { flex: 0 0 auto; width: 83.33333333%; overflow-x: auto; }
+.rtc-tree__root--col-11 { flex: 0 0 auto; width: 91.66666667%; overflow-x: auto; }
+.rtc-tree__root--col-12 { flex: 0 0 auto; width: 100%; overflow-x: auto; }
+
+.rtc-tree__row {
+  align-items: center;
+  border-radius: 0.25rem;
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: var(--rtc-row-gap);
+  min-height: var(--rtc-row-min-height);
+  padding: 0.1rem 0.25rem;
+}
+
+.rtc-tree__row:hover,
+.rtc-tree__row:focus-within {
+  background: var(--rtc-hover-bg);
+}
+
+.rtc-tree__row--disabled {
+  opacity: var(--rtc-disabled-opacity);
+}
+
+.rtc-tree__expand {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  font: inherit;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.rtc-tree__expand:focus-visible {
+  outline: var(--rtc-focus-ring);
+  outline-offset: var(--rtc-focus-offset);
+}
+
+.rtc-tree__expand-spacer {
+  display: inline-block;
+  flex-shrink: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.rtc-tree__checkbox-wrap {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.rtc-tree__checkbox {
+  cursor: pointer;
+  height: var(--rtc-checkbox-size);
+  margin: 0;
+  vertical-align: middle;
+  width: var(--rtc-checkbox-size);
+}
+
+.rtc-tree__checkbox:focus-visible {
+  outline: var(--rtc-focus-ring);
+  outline-offset: var(--rtc-focus-offset);
+}
+
+.rtc-tree__checkbox:disabled {
+  cursor: not-allowed;
+}
+
+.rtc-tree__content {
+  align-items: center;
+  display: inline-flex;
+  flex: 1 1 auto;
+  gap: 0.35rem;
+  min-width: 0;
+  position: relative;
+}
+
+.rtc-tree__node-icon {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.rtc-tree__label {
+  cursor: default;
+  min-width: 0;
+}
+
+.rtc-tree__label--clickable {
+  cursor: pointer;
+}
+
+.rtc-tree__label:focus-visible {
+  border-radius: 0.15rem;
+  outline: var(--rtc-focus-ring);
+  outline-offset: var(--rtc-focus-offset);
+}
+
+.rtc-tree__actions {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--rtc-action-gap);
+  margin-left: 0.35rem;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.rtc-tree__row:hover .rtc-tree__actions,
+.rtc-tree__row:focus-within .rtc-tree__actions {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .rtc-tree__actions {
+    opacity: 1;
+  }
+}
+
+.rtc-tree__action {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  color: var(--rtc-muted-color);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  justify-content: center;
+  line-height: 1;
+  padding: 0.15rem;
+}
+
+.rtc-tree__action:hover {
+  color: inherit;
+}
+
+.rtc-tree__action:focus-visible {
+  outline: var(--rtc-focus-ring);
+  outline-offset: var(--rtc-focus-offset);
+}
+
+.rtc-tree__children {
+  border-left: var(--rtc-guide);
+  list-style: none;
+  margin: 0;
+  padding-left: var(--rtc-indent);
+}
+
+.rtc-tree__children--with-guide {
+  padding-left: calc(var(--rtc-indent) - 1px);
+}
+
+.rtc-tree__scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.rtc-tree__scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 5px;
+}
+
+.rtc-tree__scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 5px;
+}
+
+.rtc-tree__scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}

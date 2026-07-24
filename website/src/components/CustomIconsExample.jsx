@@ -19,10 +19,10 @@ const code = `import {
 } from "react-icons/fi";
 
 <TreeView
-  filternodes={nodes}
+  nodes={nodes}
   expanded={expanded}
-  handleExpand={setExpanded}
-  changeState={setNodes}
+  onExpandedChange={setExpanded}
+  onNodesChange={setNodes}
   icons={{
     expandIcon: <FiChevronDown />,
     compressIcon: <FiChevronRight />,
@@ -44,10 +44,10 @@ export default function CustomIconsExample() {
       code={code}
     >
       <TreeView
-        filternodes={nodes}
+        nodes={nodes}
         expanded={expanded}
-        handleExpand={setExpanded}
-        changeState={setNodes}
+        onExpandedChange={setExpanded}
+        onNodesChange={setNodes}
         icons={{
           expandIcon: <FiChevronDown className="demoIcon" />,
           compressIcon: <FiChevronRight className="demoIcon" />,

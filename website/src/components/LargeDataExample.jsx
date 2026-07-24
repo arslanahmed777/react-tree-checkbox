@@ -6,10 +6,10 @@ import ExampleSection from "./ExampleSection";
 const code = `import largeNodes from "./nodes";
 
 <TreeView
-  filternodes={nodes}
+  nodes={nodes}
   expanded={expanded}
-  handleExpand={setExpanded}
-  changeState={setNodes}
+  onExpandedChange={setExpanded}
+  onNodesChange={setNodes}
 />`;
 
 export default function LargeDataExample() {
@@ -26,10 +26,10 @@ export default function LargeDataExample() {
     >
       <div className="largeTreeWrap">
         <TreeView
-          filternodes={nodes}
+          nodes={nodes}
           expanded={expanded}
-          handleExpand={setExpanded}
-          changeState={setNodes}
+          onExpandedChange={setExpanded}
+          onNodesChange={setNodes}
         />
       </div>
     </ExampleSection>

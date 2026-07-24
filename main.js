@@ -1,2 +1,10 @@
-import TreeView from "./components/TreeView.jsx";
-export default TreeView;
+export {
+  default,
+  TreeView,
+  getNodePath,
+  updateNodeStatus,
+  getCheckState,
+  filterTree,
+  collectNodeIds,
+  flattenVisibleNodes,
+} from "./src/index.js";

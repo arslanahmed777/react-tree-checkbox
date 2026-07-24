@@ -1,231 +1,188 @@
 # react-tree-checkbox
 
-A lighweight but complete react checkbox tree
+Accessible React checkbox tree with cascading selection, keyboard navigation, custom icons, and optional CRUD helpers.
 
 ## Installation
 
-Install react-tree-checkbox with npm
-
 ```bash
-  npm i react-tree-checkbox
+npm i react-tree-checkbox
 ```
 
-## Features
-
-This project have following features :
-
-- no dependencies
-- very minimal size
-- Responsive (you can give columns to show how you should divide your tree)
-- Toggle between tree and checkbox tree (if you dont want check box functionality then simply pass allowCheck={false} now you have only tree)
-- You can also change the icons (you can use react-icons or anyother package)
-- you can add spacing both horizontal and vertical
-- you can do custom styling the size of your whole tree with only one prop (customStyling)
-- you can delete the node by passing allowDelete to true
-- you can add the new node by passing allowAdd to true
-- you can edit the node by passing allowEdit to true
-- you can get the path of the node e.g "/app/http/providers/index.js"
-- you can click on single node aswell and get its information
-- By default our tree uses 4 keys in object (value,text,id,status,nodes) but you can pass your own key and value aswell. your keys and value will not interfere our tree
-- tree is capable of supporting a large number of nodes at once.
+Peer dependencies: `react` and `react-dom` (>= 16.8).
 
 ## Demo
 
-Interactive examples are available on GitHub Pages:
-
-[https://arslanahmed777.github.io/react-tree-checkbox/](https://arslanahmed777.github.io/react-tree-checkbox/)
-
-Local demo commands:
+[https://arslanahmed777.github.io/react-tree-checkbox](https://arslanahmed777.github.io/react-tree-checkbox)
 
 ```bash
 npm run docs:dev
-npm run docs:build
-npm run docs:deploy
 ```
 
-## Fake json data for testing
+## Quick start (controlled)
 
-[Link](https://stackblitz.com/edit/react-judiep?file=src%2Fnodes.js)
-
-You can also use the sample hierarchy in [`nodes.js`](./nodes.js).
-
-## Usage/Examples
-
-```javascript
-import React, { useRef, useState } from "react";
+```jsx
+import { useState } from "react";
 import TreeView from "react-tree-checkbox";
 
-const nodes = [
+const initial = [
   {
-    value: "animals",
-    text: "Animals",
     id: 1,
+    text: "Animals",
+    value: "animals",
     status: false,
     nodes: [
-      {
-        value: "mammals",
-        text: "Mammals",
-        status: false,
-        id: 2,
-        nodes: [
-          {
-            value: "cat",
-            text: "Cat",
-            status: false,
-            nodes: [],
-            id: 3,
-          },
-          {
-            value: "dog",
-            text: "Dog",
-            status: false,
-            nodes: [],
-            id: 4,
-          },
-        ],
-      },
+      { id: 2, text: "Cat", value: "cat", status: false, nodes: [] },
+      { id: 3, text: "Dog", value: "dog", status: false, nodes: [] },
     ],
-  },
-  {
-    value: "plants",
-    text: <h1>Plants</h1>,
-    status: true,
-    nodes: [],
-    id: 5,
   },
 ];
 
 export default function App() {
-  const treeRef = useRef(null);
-  const [Nodes, setNodes] = useState(nodes);
-  const [expanded, setExpanded] = useState([]);
-
-  const handleExpand = (newArray) => {
-    console.log("handleExpand", newArray);
-    setExpanded([...newArray]);
-  };
-
-  const handleCheck = (treeNodes) => {
-    console.log("handleCheck", treeNodes);
-    setNodes([...treeNodes]);
-  };
-
-  const handleAddNode = (nodeId) => {
-    console.log("handleAddNode", nodeId);
-    // open your add modal / form here, then call:
-    // treeRef.current.addNewNode(nodeId, { text: "New Node", value: "new-node" })
-  };
-
-  const handleEditNode = (node) => {
-    console.log("handleEditNode", node);
-    // open your edit modal / form here, then call:
-    // treeRef.current.editNode(node.id, { text: "Updated Node", value: "updated-node" })
-  };
-
-  const handleDeleteNode = (node) => {
-    console.log("handleDeleteNode", node);
-    // optional custom delete flow; if omitted, package deletes locally
-  };
+  const [nodes, setNodes] = useState(initial);
+  const [expanded, setExpanded] = useState([1]);
 
   return (
     <TreeView
-      ref={treeRef}
-      filternodes={Nodes}
+      nodes={nodes}
+      onNodesChange={setNodes}
       expanded={expanded}
-      handleExpand={handleExpand}
-      changeState={handleCheck}
-      allowAdd={true}
-      allowEdit={true}
-      allowDelete={true}
-      handleAddNode={handleAddNode}
-      handleEditNode={handleEditNode}
-      handleDeleteNode={handleDeleteNode}
+      onExpandedChange={setExpanded}
     />
   );
 }
 ```
 
-## Interop
+## Uncontrolled
 
-Default import (ESM / Vite / Webpack):
-
-```javascript
-import TreeView from "react-tree-checkbox";
+```jsx
+<TreeView defaultNodes={initial} defaultExpanded={[1]} />
 ```
 
-Require import (CommonJS / Node):
+## Node shape
 
-```javascript
-const TreeView = require("react-tree-checkbox");
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string \| number` | Required unique id |
+| `text` | `ReactNode` | Display label (preferred) |
+| `value` | `string` | Data / path field |
+| `status` | `boolean` | Checked state |
+| `disabled` | `boolean` | Blocks interaction |
+| `nodes` | `TreeNodeData[]` | Children (use `[]` for leaves) |
+
+Extra keys are preserved.
+
+## Props
+
+| Prop | Type | Default | Notes |
+|------|------|---------|-------|
+| `nodes` | `TreeNodeData[]` | — | Controlled data |
+| `defaultNodes` | `TreeNodeData[]` | `[]` | Uncontrolled initial data |
+| `onNodesChange` | `(nodes) => void` | — | Data updates |
+| `expanded` | `Array<id>` | — | Controlled expansion |
+| `defaultExpanded` | `Array<id>` | `[]` | Uncontrolled expansion |
+| `onExpandedChange` | `(ids) => void` | — | Expansion updates |
+| `allowCheck` | `boolean` | `true` | Show checkboxes |
+| `allowAdd` / `allowEdit` / `allowDelete` | `boolean` | `false` | CRUD action buttons |
+| `handleAddNode` | `(node) => void` | — | Add action (receives **node**) |
+| `handleEditNode` | `(node) => void` | — | Edit action |
+| `handleDeleteNode` | `(node) => void` | — | Delete action; if omitted, deletes locally |
+| `onNodeClick` | `(result) => void` | — | `{ path, node }` |
+| `onNodeClickOptions` | `object` | `{ allowExpand: false, key: "text", delimiter: "/" }` | Path building |
+| `icons` | `TreeIcons` | built-ins | Custom expand / CRUD icons |
+| `getLabel` | `(node) => ReactNode` | prefers `text` | Custom label |
+| `isNodeDisabled` | `(node) => boolean` | `node.disabled` | Disable predicate |
+| `onError` | `(error) => void` | — | Ref validation errors |
+| `className` / `style` | — | — | Root element |
+| `horizontalSpacing` | `string` | `1.25rem` | Maps to `--rtc-indent` |
+| `verticalSpacing` | `string` | `0.15rem` | Maps to `--rtc-row-gap` |
+| `borderLeft` | `string` | `none` | Child guide line |
+
+### Deprecated aliases (still work)
+
+| Legacy | Prefer |
+|--------|--------|
+| `filternodes` | `nodes` |
+| `changeState` | `onNodesChange` |
+| `handleExpand` | `onExpandedChange` |
+| `customStyling` | `style` |
+| `column` | CSS / `className` |
+
+## Ref API
+
+```jsx
+const ref = useRef(null);
+
+ref.current.addNewNode(parentId, { text: "New" }); // parentId `0` = root
+ref.current.editNode(nodeId, { text: "Renamed" });
 ```
 
-## Properties
+Both return `{ ok, node?, nodes?, error? }` instead of using `alert`.
 
-| Property           | type      | Default                                            | options       | Description                                                                                                                                                                                 |
-| ------------------ | --------- | -------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| filternodes        | array     | []                                                 |               | in this prop you will pass array of object                                                                                                                                                  |
-| expanded           | array     | []                                                 |               | in this prop you will pass array of id's which you want to expand initialiy                                                                                                                 |
-| handleExpand       | function  |                                                    |               | in this prop you will pass a call back function which return the array of id's which are expanded                                                                                           |
-| changeState        | function  |                                                    |               | in this prop you will pass a call back function which return latest nodes                                                                                                                   |
-| column             | number    | 12                                                 | 1 to 12       | divide your tree in columns. this prop will only apply on first level of nodes. this is just like bootstrap grid system                                                                     |
-| onNodeClick        | function  |                                                    |               | if you want to click on single node and want to get data of single node then use this prop. it need callback function. it will give you an object which contains two keys "path" and "node" |
-| onNodeClickOptions | object    | { allowExpand: false, key: "text", delimiter: "/"} |               | options to set on onNodeClick function                                                                                                                                                      |
-| customStyling      | object    | {}                                                 |               | pass css styling to give style to your tree                                                                                                                                                 |
-| horizontalSpacing  | string    | "23px"                                             |               | add spacing between each node horizontally                                                                                                                                                  |
-| verticalSpacing    | string    | "0px"                                              |               | add spacing between each node vertically                                                                                                                                                    |
-| borderLeft         | string    | "none"                                             |               | adds border to each node                                                                                                                                                                    |
-| allowCheck         | boolean   | true                                               | true or false | if you dont want the checkbox functionality then pass false                                                                                                                                 |
-| allowDelete        | boolean   | false                                              | true or false | show delete icon. if `handleDeleteNode` is provided it will be called with the node object; otherwise package deletes locally and returns latest nodes via `changeState`                     |
-| allowAdd           | boolean   | false                                              | true or false | show add icon / top-level add action. use with `handleAddNode` and then call `ref.current.addNewNode(...)`                                                                                  |
-| allowEdit          | boolean   | false                                              | true or false | show edit icon. use with `handleEditNode` and then call `ref.current.editNode(...)`                                                                                                         |
-| handleAddNode      | function  |                                                    |               | callback when add is clicked. receives `nodeId` (`0` for root add)                                                                                                                          |
-| handleEditNode     | function  |                                                    |               | callback when edit is clicked. receives the full node object                                                                                                                                |
-| handleDeleteNode   | function  |                                                    |               | optional callback when delete is clicked. receives the full node object. if omitted, package deletes the node locally                                                                       |
-| addText            | string    | "Add New Node"                                     |               | if you want to change the text.                                                                                                                                                             |
-| ref                | reference |                                                    |               | pass reference. exposes `addNewNode(nodeId, obj)` and `editNode(nodeId, obj)`                                                                                                               |
-| icons              | object    |                                                    |               | if you want to change the icons                                                                                                                                                             |
+## Theming
 
-## icons Properties
+Override CSS variables on the root (or a parent):
 
-| Property         |
-| ---------------- |
-| compressIcon     |
-| expandIcon       |
-| nodeCompressIcon |
-| nodeExpandIcon   |
-| nonNodeIcon      |
-| deleteIcon       |
-| addIcon          |
-| editIcon         |
+```css
+.rtc-tree {
+  --rtc-indent: 1.5rem;
+  --rtc-row-gap: 0.25rem;
+  --rtc-guide: 1px solid #d1d5db;
+  --rtc-focus-ring: 2px solid #2563eb;
+  --rtc-hover-bg: rgba(0, 0, 0, 0.04);
+}
+```
 
-## nodes Properties
+Styles are injected automatically when you import the package. Class prefix: `rtc-tree`.
 
-| Property | Description                                                        |
-| -------- | ------------------------------------------------------------------ |
-| text     | any string / React node                                            |
-| value    | any string (label shown prefers `value`, falls back to `text`)     |
-| status   | boolean true or false                                              |
-| id       | must b unique id                                                   |
-| nodes    | pass empty array if you dont want children                         |
+## Accessibility
 
-## Ref methods
+- `role="tree"` / `treeitem` / `group`
+- Roving tabindex between visible rows
+- Arrow keys, Home/End, Space (toggle check), Enter (node click)
+- `aria-expanded`, `aria-checked` (including `mixed` for indeterminate)
+- Action buttons visible on `:focus-within`
 
-| Method     | Signature       | Description                                                             |
-| ---------- | --------------- | ----------------------------------------------------------------------- |
-| addNewNode | `(nodeId, obj)` | add a new node under `nodeId` (`0` adds at root). `obj.text` is required |
-| editNode   | `(nodeId, obj)` | update an existing node by id. `obj.text` is required; `value` is optional |
+## Helpers
 
-# Hi, I'm Arslan Ahmed Shaad! 👋
+```js
+import {
+  getNodePath,
+  updateNodeStatus,
+  getCheckState,
+  filterTree,
+  collectNodeIds,
+  flattenVisibleNodes,
+} from "react-tree-checkbox";
+```
 
-## 🚀 About Me
+## FAQ
 
-I'm a full stack developer...
+**Why did my label change in v2?**  
+Labels prefer `text` over `value`. Use `getLabel={(n) => n.value}` if you need the old behavior.
 
-## Feedback
+**Does it virtualize large trees?**  
+No. Mid-sized trees are fine; very large lists should be filtered or paginated by the host app.
 
-If you have any feedback, please reach out to us at ashi3610@gmail.com
+**Can I use it without checkboxes?**  
+Yes — `allowCheck={false}`.
 
-## Authors
+## Migration guide (1.x → 2.0)
 
-- [@Arslan Ahmed Shaad](https://github.com/arslanahmed777)
-- [@Danish](https://github.com/Rajadanish53)
+1. Rename props: `filternodes` → `nodes`, `changeState` → `onNodesChange`, `handleExpand` → `onExpandedChange`, `customStyling` → `style` (aliases still work with a console warning).
+2. Labels now prefer `text`. Update data or pass `getLabel`.
+3. `handleAddNode` receives the **node object** (not an id). Types now match runtime.
+4. `addText` / root add UI was removed in 1.x already — use `ref.addNewNode(0, { text })` or your own button.
+5. Ref CRUD no longer calls `alert`; handle `onError` or the returned `{ ok, error }`.
+6. Tree updates are immutable — always use the array returned by `onNodesChange`.
+
+## Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run build` | ESM + CJS bundles |
+| `npm test` | Unit tests + interop verify |
+| `npm run docs:dev` | Local docs site |
+
+## License
+
+ISC

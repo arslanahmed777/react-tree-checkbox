@@ -10,8 +10,8 @@ const code = `const treeRef = useRef(null);
   allowAdd
   allowEdit
   allowDelete
-  handleAddNode={(nodeId) => {
-    treeRef.current.addNewNode(nodeId, {
+  handleAddNode={(node) => {
+    treeRef.current.addNewNode(node.id, {
       text: "New Node",
       value: "new-node",
     });
@@ -40,16 +40,16 @@ export default function CrudExample() {
       <p className="exampleLog">{log}</p>
       <TreeView
         ref={treeRef}
-        filternodes={nodes}
+        nodes={nodes}
         expanded={expanded}
-        handleExpand={setExpanded}
-        changeState={setNodes}
+        onExpandedChange={setExpanded}
+        onNodesChange={setNodes}
         allowAdd
         allowEdit
         allowDelete
-        handleAddNode={(nodeId) => {
-          setLog(`Add clicked for nodeId=${nodeId}`);
-          treeRef.current.addNewNode(nodeId, {
+        handleAddNode={(node) => {
+          setLog(`Add clicked for nodeId=${node.id}`);
+          treeRef.current.addNewNode(node.id, {
             text: "New Node",
             value: `new-node-${Date.now()}`,
           });

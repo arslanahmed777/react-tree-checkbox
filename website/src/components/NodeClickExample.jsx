@@ -4,10 +4,10 @@ import { basicNodes } from "../data/basicNodes";
 import ExampleSection from "./ExampleSection";
 
 const code = `<TreeView
-  filternodes={nodes}
+  nodes={nodes}
   expanded={expanded}
-  handleExpand={setExpanded}
-  changeState={setNodes}
+  onExpandedChange={setExpanded}
+  onNodesChange={setNodes}
   onNodeClick={(result) => console.log(result)}
   onNodeClickOptions={{
     allowExpand: true,
@@ -34,10 +34,10 @@ export default function NodeClickExample() {
           : "Click a node label to see its path."}
       </p>
       <TreeView
-        filternodes={nodes}
+        nodes={nodes}
         expanded={expanded}
-        handleExpand={setExpanded}
-        changeState={setNodes}
+        onExpandedChange={setExpanded}
+        onNodesChange={setNodes}
         onNodeClick={(result) => setClicked(result)}
         onNodeClickOptions={{
           allowExpand: true,

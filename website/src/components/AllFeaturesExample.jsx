@@ -70,7 +70,6 @@ const AllFeaturesExample = () => {
 
 
 
-
   const handleDeleteNode = (node) => {
     setselectedNode(node);
   }
@@ -85,27 +84,27 @@ const AllFeaturesExample = () => {
         <div className='col-span-8'>
           <TreeView
             ref={treeRef}
-            filternodes={nodes}
+            nodes={nodes}
             expanded={expanded}
             allowCheck={true}
-            handleExpand={handleExpand}
-            changeState={handleCheck}
+            onExpandedChange={handleExpand}
+            onNodesChange={handleCheck}
             allowAdd={true}
             handleAddNode={handleAddNode}
             allowEdit={true}
             handleEditNode={handleEditNode}
             allowDelete={true}
             handleDeleteNode={handleDeleteNode}
-            horizontalSpacing={20}
-            verticalSpacing={10}
-            customStyling={{
+            // horizontalSpacing="20px"
+            // verticalSpacing="10px"
+            style={{
               fontSize: "15px",
               fontWeight: 500,
               lineHeight: "1.6",
               color: "#151A20",
               letterSpacing: "0.2px",
             }}
-            column={6}
+            column={12}
             onNodeClickOptions={{
               allowExpand: true,
               key: "text",

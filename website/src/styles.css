@@ -409,6 +409,33 @@ html.isReady .hero {
   font-weight: 600;
 }
 
+.demoField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+  max-width: 22rem;
+}
+
+.demoField span {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.demoField input {
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  font: inherit;
+  padding: 0.45rem 0.65rem;
+}
+
+.demoHint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem;
+}
+
 @media (max-width: 860px) {
   .hero {
     grid-template-columns: 1fr;

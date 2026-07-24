@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.0.0
+
+### Breaking
+- Default node label prefers `text` over `value` (override with `getLabel`).
+- Ref CRUD validation no longer uses `browser alert`; use `onError` or return values.
+- Tree helpers update data immutably (new array/object references).
+- Removed undocumented/dead `addText` from types (UI was already gone).
+
+### Added
+- Preferred props: `nodes`, `onNodesChange`, `onExpandedChange`, `style`, `className`.
+- Uncontrolled mode: `defaultNodes`, `defaultExpanded`.
+- Disabled nodes via `disabled` / `isNodeDisabled`.
+- Indeterminate checkbox state for partial selection.
+- ARIA tree roles, roving tabindex, and keyboard navigation.
+- `onError` callback for imperative API validation.
+- Exported helpers: `getNodePath`, `updateNodeStatus`, `getCheckState`, `filterTree`, `collectNodeIds`, `flattenVisibleNodes`.
+- Rewritten CSS with custom properties (`--rtc-*`).
+- Unit tests (Vitest + Testing Library).
+- Docs examples: uncontrolled, disabled, search, lazy load.
+
+### Deprecated (aliases still work)
+- `filternodes` → `nodes`
+- `changeState` → `onNodesChange`
+- `handleExpand` → `onExpandedChange`
+- `customStyling` → `style`
+- `column` → layout via CSS / `className`
+
+### Fixed
+- In-place mutation of `expanded` / tree data.
+- Checkbox cascade correctness for deep trees.
+- `handleAddNode` TypeScript signature (receives node object).
+- Package metadata: `files`, `sideEffects`, `bugs`, `engines`.
+
 ## 1.4.1
 
 - Added edit support with `allowEdit`, `handleEditNode`, and `editIcon`.

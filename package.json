@@ -1,7 +1,7 @@
 {
   "name": "react-tree-checkbox",
-  "version": "1.4.1",
-  "description": "A lightweight but complete react tree with checkbox functionality",
+  "version": "2.0.0",
+  "description": "Accessible React checkbox tree with cascading selection, custom icons, and CRUD helpers",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "types": "./index.d.ts",
@@ -13,14 +13,31 @@
       "default": "./dist/index.esm.js"
     }
   },
+  "files": [
+    "dist",
+    "index.d.ts",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/arslanahmed777/react-tree-checkbox"
   },
   "homepage": "https://arslanahmed777.github.io/react-tree-checkbox",
+  "bugs": {
+    "url": "https://github.com/arslanahmed777/react-tree-checkbox/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "webpack && node ./scripts/postBuildInterop.cjs",
-    "test": "npm run verify:interop",
+    "test": "vitest run && npm run verify:interop",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
     "verify:interop": "npm run build && node ./scripts/verifyInterop.mjs",
     "docs:dev": "vite --config website/vite.config.js",
     "docs:build": "npm run build && vite build --config website/vite.config.js",
@@ -33,11 +50,17 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
+  "dependencies": {
+    "prop-types": "^15.8.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
     "@eslint/js": "^9.39.5",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.0.4",
     "babel-loader": "^8.0.6",
@@ -48,7 +71,7 @@
     "eslint-plugin-react-refresh": "^0.5.3",
     "gh-pages": "^6.3.0",
     "globals": "^17.7.0",
-    "prop-types": "^15.7.2",
+    "jsdom": "^26.0.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-icons": "^5.7.0",
@@ -57,18 +80,21 @@
     "svg-url-loader": "^7.1.1",
     "tailwindcss": "^4.3.3",
     "vite": "^8.1.5",
+    "vitest": "^3.0.5",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
   },
   "keywords": [
+    "react",
+    "react-tree",
     "react-tree-checkbox",
     "react-checkbox-tree",
-    "tree-nav",
-    "tree",
-    "react",
-    "tree-navigation",
+    "checkbox-tree",
     "treeview",
-    "treeNav"
+    "tree-view",
+    "tree-navigation",
+    "accessible",
+    "aria-tree"
   ],
   "author": "Arslan Ahmed Shaad",
   "license": "ISC"

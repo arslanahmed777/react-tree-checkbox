@@ -1,34 +1,49 @@
 import React, { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import BasicExample from "./components/BasicExample";
+import UncontrolledExample from "./components/UncontrolledExample";
+import DisabledExample from "./components/DisabledExample";
 import AllFeaturesExample from "./components/AllFeaturesExample";
 import CustomIconsExample from "./components/CustomIconsExample";
 import HideCheckboxesExample from "./components/HideCheckboxesExample";
 import CrudExample from "./components/CrudExample";
 import NodeClickExample from "./components/NodeClickExample";
 import StylingExample from "./components/StylingExample";
+import SearchExample from "./components/SearchExample";
+import LazyLoadExample from "./components/LazyLoadExample";
 import LargeDataExample from "./components/LargeDataExample";
+import ExpandAllCollapseAllExample from "./components/ExpandAllCollapseAllExample";
 
 const navItems = [
   { href: "#basic", label: "Basic" },
+  { href: "#uncontrolled", label: "Uncontrolled" },
+  { href: "#disabled", label: "Disabled" },
   { href: "#all-features", label: "All Features" },
   { href: "#custom-icons", label: "Icons" },
   { href: "#hide-checkboxes", label: "No checkboxes" },
   { href: "#crud", label: "CRUD" },
   { href: "#node-click", label: "Click path" },
   { href: "#styling", label: "Styling" },
+  { href: "#search", label: "Search" },
+  { href: "#lazy", label: "Lazy load" },
   { href: "#large-data", label: "Large data" },
+  { href: "#expand-all-collapse-all", label: "Expand all / Collapse all" },
 ];
 
 const examples = [
   BasicExample,
+  UncontrolledExample,
+  DisabledExample,
   AllFeaturesExample,
   CustomIconsExample,
   HideCheckboxesExample,
   CrudExample,
   NodeClickExample,
   StylingExample,
+  SearchExample,
+  LazyLoadExample,
   LargeDataExample,
+  ExpandAllCollapseAllExample,
 ];
 
 export default function App() {
@@ -57,10 +72,10 @@ export default function App() {
         <section className="hero">
           <div className="heroCopy">
             <p className="heroBrand">react-tree-checkbox</p>
-            <h1>A lightweight React checkbox tree</h1>
+            <h1>Accessible React checkbox trees</h1>
             <p className="heroLead">
-              Expandable nodes, cascading checks, custom icons, and built-in add /
-              edit / delete — small enough to drop into any app.
+              Cascading checks, keyboard navigation, custom icons, and CRUD helpers —
+              built for production apps.
             </p>
             <div className="heroActions">
               <a

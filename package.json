@@ -1,6 +1,6 @@
 {
   "name": "react-tree-checkbox",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Accessible React checkbox tree with cascading selection, custom icons, and CRUD helpers",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+### Added
+- `onNodesChange` / `changeState` now receive an optional second argument: the node that triggered the change (toggled checkbox node after update, or deleted node for local delete).
+
 ## 2.0.0
 
 ### Breaking

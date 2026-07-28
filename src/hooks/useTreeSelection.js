@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { findNodeById } from "../utils/findNode.js";
 import { updateNodeStatus } from "../utils/updateNodeStatus.js";
 
 /**
@@ -6,7 +7,7 @@ import { updateNodeStatus } from "../utils/updateNodeStatus.js";
  * @param {{
  *   nodes?: Array,
  *   defaultNodes?: Array,
- *   onNodesChange?: (nodes: Array) => void,
+ *   onNodesChange?: (nodes: Array, changedNode?: object|null) => void,
  * }} options
  */
 export function useTreeSelection({
@@ -19,13 +20,13 @@ export function useTreeSelection({
   const nodes = isControlled ? nodesProp : uncontrolled;
 
   const setNodes = useCallback(
-    (next) => {
+    (next, changedNode) => {
       const value = typeof next === "function" ? next(nodes) : next;
       if (!isControlled) {
         setUncontrolled(value);
       }
       if (typeof onNodesChange === "function") {
-        onNodesChange(value);
+        onNodesChange(value, changedNode);
       }
     },
     [nodes, isControlled, onNodesChange]
@@ -33,9 +34,11 @@ export function useTreeSelection({
 
   const setNodeChecked = useCallback(
     (id, checked) => {
-      setNodes((prev) => updateNodeStatus(prev, id, checked));
+      const value = updateNodeStatus(nodes, id, checked);
+      const changedNode = findNodeById(value, id);
+      setNodes(value, changedNode);
     },
-    [setNodes]
+    [nodes, setNodes]
   );
 
   return { nodes, setNodes, setNodeChecked, isControlled };

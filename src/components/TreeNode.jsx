@@ -106,7 +106,7 @@ const TreeNode = memo(function TreeNode({ node, rootClassName }) {
         handleDeleteNode(target);
         return;
       }
-      setNodes(removeNode(rootNodes, target.id));
+      setNodes(removeNode(rootNodes, target.id), target);
     },
     [handleDeleteNode, rootNodes, setNodes]
   );

@@ -77,7 +77,7 @@ Extra keys are preserved.
 |------|------|---------|-------|
 | `nodes` | `TreeNodeData[]` | — | Controlled data |
 | `defaultNodes` | `TreeNodeData[]` | `[]` | Uncontrolled initial data |
-| `onNodesChange` | `(nodes) => void` | — | Data updates |
+| `onNodesChange` | `(nodes, changedNode?) => void` | — | Data updates; `changedNode` is the toggled/deleted node when applicable |
 | `expanded` | `Array<id>` | — | Controlled expansion |
 | `defaultExpanded` | `Array<id>` | `[]` | Uncontrolled expansion |
 | `onExpandedChange` | `(ids) => void` | — | Expansion updates |

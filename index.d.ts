@@ -56,10 +56,20 @@ export interface TreeViewProps {
   expanded?: NodeId[];
   /** Initial expanded ids for uncontrolled mode. */
   defaultExpanded?: NodeId[];
-  /** Called when tree data changes (preferred). */
-  onNodesChange?: (updatedNodes: TreeNodeData[]) => void;
+  /**
+   * Called when tree data changes (preferred).
+   * Second argument is the node that triggered the change when available
+   * (e.g. the checkbox that was toggled, or the deleted node).
+   */
+  onNodesChange?: (
+    updatedNodes: TreeNodeData[],
+    changedNode?: TreeNodeData | null
+  ) => void;
   /** @deprecated Use `onNodesChange`. */
-  changeState?: (updatedNodes: TreeNodeData[]) => void;
+  changeState?: (
+    updatedNodes: TreeNodeData[],
+    changedNode?: TreeNodeData | null
+  ) => void;
   /** Called when expanded ids change (preferred). */
   onExpandedChange?: (expandedIds: NodeId[]) => void;
   /** @deprecated Use `onExpandedChange`. */

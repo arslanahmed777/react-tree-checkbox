@@ -29,8 +29,15 @@ const AllFeaturesExample = () => {
   const handleExpand = (newArray) => {
     setExpanded([...newArray]);
   };
-  const handleCheck = (treeNodes) => {
+  const handleCheck = (treeNodes, changedNode) => {
+    console.log(changedNode);
     setNodes([...treeNodes]);
+    // changedNode is the node the user toggled (with updated status)
+    if (changedNode) {
+      setpath(
+        `Checked node: id=${changedNode.id}, text=${changedNode.text}, status=${changedNode.status}`
+      );
+    }
   };
 
   const handleAddNode = (node) => {

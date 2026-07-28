@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef, useState } from "react";
@@ -87,6 +87,31 @@ describe("TreeView", () => {
     const animals = view.getByRole("checkbox", { name: "Animals" });
     await user.click(animals);
     expect(view.getByRole("checkbox", { name: "Cat" })).toBeChecked();
+  });
+
+  it("passes the toggled node as the second onNodesChange argument", async () => {
+    const user = userEvent.setup();
+    const onNodesChange = vi.fn();
+    function WithSpy() {
+      const [nodes, setNodes] = useState(baseNodes);
+      const [expanded, setExpanded] = useState([1]);
+      return (
+        <TreeView
+          nodes={nodes}
+          expanded={expanded}
+          onExpandedChange={setExpanded}
+          onNodesChange={(next, changedNode) => {
+            onNodesChange(next, changedNode);
+            setNodes(next);
+          }}
+        />
+      );
+    }
+    const { container } = render(<WithSpy />);
+    await user.click(within(container).getByRole("checkbox", { name: "Cat" }));
+    expect(onNodesChange).toHaveBeenCalled();
+    const [, changedNode] = onNodesChange.mock.calls.at(-1);
+    expect(changedNode).toMatchObject({ id: 2, text: "Cat", status: true });
   });
 
   it("toggles expansion", async () => {
